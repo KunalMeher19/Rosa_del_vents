@@ -5,14 +5,14 @@
 
 /* CSS Variables */
 :root {
-  --color-bg: #ffffff;
-  --color-bg-dark: #1a1a1a;
-  --color-bg-light: #f5f5f5;
+  --color-bg: #F8F7F4;
+  --color-bg-dark: #22201F;
+  --color-bg-light: #F0EDE5;
   --color-text: #1a1a1a;
-  --color-text-light: #ffffff;
+  --color-text-light: #F8F7F4;
   --color-text-muted: #888888;
   --color-accent: #c9a962;
-  --color-border: #e5e5e5;
+  --color-border: #e2ddd1;
   --color-border-dark: #333333;
   --font-serif: 'Cormorant Garamond', serif;
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -28,13 +28,15 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
+  /* Lenis handles smooth scrolling */
   font-size: 16px;
 }
 
 body {
   font-family: var(--font-sans);
   background-color: var(--color-bg);
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.035'/%3E%3C/svg%3E");
   color: var(--color-text);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
