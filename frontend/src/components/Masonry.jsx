@@ -1,9 +1,6 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './Masonry.css';
-
-gsap.registerPlugin(ScrollTrigger);
 
 const useMedia = (queries, values, defaultValue) => {
     const get = () => values[queries.findIndex(q => matchMedia(q).matches)] ?? defaultValue;
@@ -148,11 +145,6 @@ const Masonry = ({
                 };
 
                 gsap.fromTo(selector, initialState, {
-                    scrollTrigger: {
-                        trigger: containerRef.current,
-                        start: 'top 95%', // Trigger as soon as the container's top hits 95% down the viewport
-                        toggleActions: 'play none none reverse'
-                    },
                     opacity: 1,
                     ...animationProps,
                     ...(blurToFocus && { filter: 'blur(0px)' }),
