@@ -3,46 +3,45 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './App.css';
 
+import { LanguageProvider } from './context/LanguageContext';
 import LoadingScreen from './components/LoadingScreen';
 import Navigation from './components/Navigation';
 import Hero from './components/Hero';
+import BookingBanner from './components/BookingBanner';
 import HotelCarousel from './components/HotelCarousel';
 import HotelsSection from './components/HotelsSection';
 import LocationSpotlight from './components/LocationSpotlight';
 import EditorsPicks from './components/EditorsPicks';
 import PeopleSection from './components/PeopleSection';
 import InstagramFeed from './components/InstagramFeed';
+import ContactSection from './components/ContactSection';
 import Footer from './components/Footer';
 
 gsap.registerPlugin(ScrollTrigger);
 
-function App() {
+function AppInner() {
   const [loading, setLoading] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 3000);
+    const timer = setTimeout(() => setLoading(false), 3200);
     return () => clearTimeout(timer);
   }, []);
 
-  // GSAP scroll-triggered reveals — run once loading is done
   useEffect(() => {
     if (!loading) {
-      // Allow the CSS opacity transition to begin first
       const t = setTimeout(() => {
         const sections = gsap.utils.toArray('.reveal-section');
         sections.forEach((section) => {
           gsap.from(section, {
             scrollTrigger: {
               trigger: section,
-              start: 'top 85%',
+              start: 'top 88%',
               toggleActions: 'play none none none',
             },
-            y: 50,
+            y: 40,
             opacity: 0,
-            duration: 1,
+            duration: 0.9,
             ease: 'power3.out',
           });
         });
@@ -60,7 +59,6 @@ function App() {
           });
         });
       }, 600);
-
       return () => clearTimeout(t);
     }
   }, [loading]);
@@ -69,29 +67,31 @@ function App() {
     <div className="App">
       <LoadingScreen isLoading={loading} />
 
-      {/* Navigation mounts after loading */}
       {!loading && (
         <Navigation menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
       )}
 
-      {/*
-        Main content is ALWAYS in the DOM.
-        Visibility is toggled by adding the 'visible' class,
-        which triggers the CSS opacity transition in App.css.
-        This avoids the GSAP timing issue where contentRef.current
-        is null when the hook fires.
-      */}
       <main className={`main-content${!loading ? ' visible' : ''}`}>
         <Hero />
+        <BookingBanner />
         <HotelCarousel />
         <HotelsSection />
         <LocationSpotlight />
         <EditorsPicks />
         <PeopleSection />
         <InstagramFeed />
+        <ContactSection />
         <Footer />
       </main>
     </div>
+  );
+}
+
+function App() {
+  return (
+    <LanguageProvider>
+      <AppInner />
+    </LanguageProvider>
   );
 }
 

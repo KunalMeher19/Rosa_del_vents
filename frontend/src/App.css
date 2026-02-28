@@ -509,6 +509,28 @@ img {
   text-transform: uppercase;
 }
 
+.hero-cta-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+.hero-link {
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.hero-link:hover {
+  color: var(--color-accent);
+}
+
 .hero-button {
   display: inline-block;
   padding: 1rem 2rem;
@@ -1640,24 +1662,279 @@ button:focus-visible {
   outline-offset: 4px;
 }
 
-/* Loading State for Images */
-img {
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
+/* =========================================
+   HOSTAL ROSA DELS VENTS - NEW COMPONENTS
+   ========================================= */
+
+/* Language Toggle */
+.lang-toggle {
+  background: none;
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  padding: 0.4rem 0.6rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-right: 1.5rem;
 }
 
-img[src] {
-  animation: none;
+.scrolled .lang-toggle {
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+.lang-toggle:hover {
+  background: var(--color-bg-dark);
+  color: var(--color-bg);
+  border-color: var(--color-bg-dark);
+}
+
+/* Hero bg overlay (darker to make text read well) */
+.hero-bg-overlay {
+  background: linear-gradient(to bottom,
+      rgba(0, 0, 0, 0.3) 0%,
+      rgba(0, 0, 0, 0.4) 50%,
+      rgba(0, 0, 0, 0.6) 100%);
+}
+
+/* Booking Banner */
+.booking-banner {
+  background-color: var(--color-bg-dark);
+  color: var(--color-bg);
+  padding: 1.5rem 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.booking-banner-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  padding: 0 2rem;
+  max-width: 1200px;
+  width: 100%;
+}
+
+.booking-banner-text {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.booking-banner-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: var(--color-accent);
+  color: var(--color-bg);
+  text-decoration: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 2px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: transform 0.3s, background-color 0.3s;
+}
+
+.booking-banner-button:hover {
+  background-color: #d8b870;
+  transform: translateY(-2px);
+}
+
+/* Contact Section */
+.contact-section {
+  padding: 8rem 2rem;
+  background-color: var(--color-bg-light);
+}
+
+.contact-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6rem;
+}
+
+.contact-section-label {
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  display: block;
+  margin-bottom: 2rem;
+}
+
+.contact-heading {
+  font-family: var(--font-serif);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 300;
+  line-height: 1.1;
+  margin-bottom: 4rem;
+}
+
+.contact-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  margin-bottom: 4rem;
+}
+
+.contact-info-label {
+  display: block;
+  font-size: 0.65rem;
+  color: var(--color-text-muted);
+  letter-spacing: 0.1em;
+  margin-bottom: 0.8rem;
+}
+
+.contact-info-value {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--color-text);
+  text-decoration: none;
+  display: block;
+}
+
+a.contact-info-value:hover {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.contact-pending {
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+.booking-link {
+  font-weight: 500;
+  color: #003580;
+  /* Booking.com blue */
+}
+
+/* Contact Form */
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.form-group input,
+.form-group textarea {
   background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--color-border);
+  padding: 0.8rem 0;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  color: var(--color-text);
+  transition: border-color 0.3s;
 }
 
-@keyframes shimmer {
-  0% {
-    background-position: 200% 0;
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-bottom-color: var(--color-text);
+}
+
+.contact-submit {
+  align-self: flex-start;
+  background: var(--color-text);
+  color: var(--color-bg);
+  border: none;
+  padding: 1rem 2rem;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.3s, background-color 0.3s;
+  margin-top: 1rem;
+}
+
+.contact-submit:hover {
+  background: var(--color-accent);
+  transform: translateY(-2px);
+}
+
+.contact-success {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+}
+
+.success-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  margin: 0 auto 2rem;
+}
+
+.contact-success h3 {
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+/* Gallery title fix */
+.instagram-section-title {
+  text-align: center;
+  font-family: var(--font-serif);
+  font-size: clamp(3rem, 6vw, 4.5rem);
+  font-weight: 300;
+  margin-bottom: 4rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+  .contact-inner {
+    grid-template-columns: 1fr;
+    gap: 4rem;
   }
 
-  100% {
-    background-position: -200% 0;
+  .booking-banner-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .contact-info-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .lang-toggle {
+    margin-right: 1rem;
+    padding: 0.3rem 0.5rem;
   }
 }
