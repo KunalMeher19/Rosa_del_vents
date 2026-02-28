@@ -1,6 +1,9 @@
-import React, { useRef, useLayoutEffect, useState } from 'react';
+import React, { useRef, useLayoutEffect } from 'react';
 import { gsap } from 'gsap';
+import { Draggable } from 'gsap/all';
 import { useLang } from '../context/LanguageContext';
+
+gsap.registerPlugin(Draggable);
 
 const nearbyData = [
   {
@@ -53,8 +56,6 @@ const nearbyData = [
 const EditorsPicks = () => {
   const sectionRef = useRef(null);
   const carouselRef = useRef(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isAnimating, setIsAnimating] = useState(false);
   const { t, lang } = useLang();
 
   useLayoutEffect(() => {
@@ -63,27 +64,49 @@ const EditorsPicks = () => {
         scrollTrigger: { trigger: sectionRef.current, start: 'top 80%', toggleActions: 'play none none reverse' },
         y: 40, opacity: 0, duration: 0.8, ease: 'power2.out'
       });
+
+      Draggable.create(carouselRef.current, {
+        type: 'scrollLeft',
+        edgeResistance: 0.8,
+        inertia: false,
+        onPress: () => gsap.killTweensOf(carouselRef.current)
+      });
     }, sectionRef);
     return () => ctx.revert();
   }, []);
 
-  const scrollToIndex = (index) => {
-    if (isAnimating || !carouselRef.current) return;
-    setIsAnimating(true);
-    const cards = carouselRef.current.children;
-    if (!cards[0]) return;
-    const cardWidth = cards[0].offsetWidth + 16;
-    gsap.to(carouselRef.current, {
-      scrollLeft: index * cardWidth,
-      duration: 0.8,
-      ease: 'power3.out',
-      onComplete: () => setIsAnimating(false)
-    });
-    setCurrentIndex(index);
+  const getCardWidth = () => {
+    if (!carouselRef.current || !carouselRef.current.children[0]) return 0;
+    // Assuming 1rem (16px) gap between cards
+    return carouselRef.current.children[0].offsetWidth + 16;
   };
 
-  const handlePrev = () => scrollToIndex(currentIndex > 0 ? currentIndex - 1 : nearbyData.length - 1);
-  const handleNext = () => scrollToIndex(currentIndex < nearbyData.length - 1 ? currentIndex + 1 : 0);
+  const scrollToIndex = (index) => {
+    if (!carouselRef.current) return;
+    gsap.killTweensOf(carouselRef.current);
+    const cardWidth = getCardWidth();
+    gsap.to(carouselRef.current, {
+      scrollLeft: index * cardWidth,
+      duration: 1.5, // nice slow and smooth duration
+      ease: 'power2.inOut'
+    });
+  };
+
+  const handlePrev = () => {
+    const cardWidth = getCardWidth();
+    if (!cardWidth || !carouselRef.current) return;
+    const currentIdx = Math.round(carouselRef.current.scrollLeft / cardWidth);
+    const nextIdx = currentIdx > 0 ? currentIdx - 1 : nearbyData.length - 1;
+    scrollToIndex(nextIdx);
+  };
+
+  const handleNext = () => {
+    const cardWidth = getCardWidth();
+    if (!cardWidth || !carouselRef.current) return;
+    const currentIdx = Math.round(carouselRef.current.scrollLeft / cardWidth);
+    const nextIdx = currentIdx < nearbyData.length - 1 ? currentIdx + 1 : 0;
+    scrollToIndex(nextIdx);
+  };
 
   const handleCardEnter = (e) => {
     const card = e.currentTarget;

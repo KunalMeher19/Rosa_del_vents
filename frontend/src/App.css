@@ -1141,7 +1141,6 @@ img {
   display: flex;
   gap: 1rem;
   overflow-x: auto;
-  scroll-snap-type: x mandatory;
   scrollbar-width: none;
   -ms-overflow-style: none;
   padding: 1rem 0;
@@ -1157,7 +1156,6 @@ img {
 .pick-card {
   flex: 0 0 calc(25% - 0.75rem);
   min-width: 300px;
-  scroll-snap-align: start;
   background: var(--color-bg);
   border-radius: 12px;
   overflow: hidden;
