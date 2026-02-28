@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import LoadingScreen from './components/LoadingScreen';
 import Navigation from './components/Nav';
@@ -16,14 +16,9 @@ function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrollY, setScrollY] = useState(0);
 
-  useEffect(() => {
-    // Simulate loading time for the animation
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 2800);
-
-    return () => clearTimeout(timer);
-  }, []);
+  const handleLoadingComplete = () => {
+    setLoading(false);
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -36,10 +31,10 @@ function App() {
 
   return (
     <div className="App">
-      {loading && <LoadingScreen />}
+      {loading && <LoadingScreen onComplete={handleLoadingComplete} />}
 
-      <Navigation 
-        menuOpen={menuOpen} 
+      <Navigation
+        menuOpen={menuOpen}
         setMenuOpen={setMenuOpen}
         scrollY={scrollY}
       />
