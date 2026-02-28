@@ -1,4 +1,8 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useLayoutEffect, useState } from 'react';
+import { gsap } from 'gsap';
+import { Draggable } from 'gsap/Draggable';
+
+gsap.registerPlugin(Draggable);
 
 const hotels = [
   {
@@ -44,76 +48,118 @@ const hotels = [
 ];
 
 const HotelCarousel = () => {
-  const scrollRef = useRef(null);
+  const trackRef = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const [scrollLeft, setScrollLeft] = useState(0);
+  const autoScrollRef = useRef(null);
 
-  useEffect(() => {
-    const scrollContainer = scrollRef.current;
-    if (!scrollContainer) return;
+  useLayoutEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
 
-    let animationId;
-    let scrollPos = 0;
-    const speed = 0.5;
+    // Create infinite loop by cloning items
+    const items = track.innerHTML;
+    track.innerHTML = items + items;
 
-    const autoScroll = () => {
-      if (!isDragging) {
-        scrollPos += speed;
-        if (scrollPos >= scrollContainer.scrollWidth - scrollContainer.clientWidth) {
-          scrollPos = 0;
+    // Auto-scroll animation
+    const startAutoScroll = () => {
+      const totalWidth = track.scrollWidth / 2;
+
+      autoScrollRef.current = gsap.to(track, {
+        x: -totalWidth,
+        duration: 40,
+        ease: 'none',
+        repeat: -1,
+        modifiers: {
+          x: gsap.utils.unitize(x => {
+            const newX = parseFloat(x) % totalWidth;
+            return newX;
+          })
         }
-        scrollContainer.scrollLeft = scrollPos;
-      }
-      animationId = requestAnimationFrame(autoScroll);
+      });
     };
 
-    // Start auto-scroll after a delay
-    const timeout = setTimeout(() => {
-      animationId = requestAnimationFrame(autoScroll);
-    }, 2000);
+    // Start after delay
+    const delay = gsap.delayedCall(2, startAutoScroll);
+
+    // Draggable functionality
+    const draggable = Draggable.create(track, {
+      type: 'x',
+      inertia: true,
+      bounds: {
+        minX: -(track.scrollWidth - track.parentElement.clientWidth),
+        maxX: 0
+      },
+      onDragStart: () => {
+        setIsDragging(true);
+        if (autoScrollRef.current) {
+          autoScrollRef.current.pause();
+        }
+      },
+      onDragEnd: () => {
+        setIsDragging(false);
+        gsap.delayedCall(1, () => {
+          if (autoScrollRef.current) {
+            autoScrollRef.current.play();
+          }
+        });
+      }
+    })[0];
+
+    // Entrance animation
+    gsap.from('.carousel-item', {
+      scrollTrigger: {
+        trigger: track,
+        start: 'top 85%',
+        toggleActions: 'play none none reverse'
+      },
+      y: 60,
+      opacity: 0,
+      duration: 0.8,
+      stagger: 0.1,
+      ease: 'power2.out'
+    });
 
     return () => {
-      clearTimeout(timeout);
-      cancelAnimationFrame(animationId);
+      delay.kill();
+      if (autoScrollRef.current) autoScrollRef.current.kill();
+      if (draggable) draggable.kill();
     };
-  }, [isDragging]);
+  }, []);
 
-  const handleMouseDown = (e) => {
-    setIsDragging(true);
-    setStartX(e.pageX - scrollRef.current.offsetLeft);
-    setScrollLeft(scrollRef.current.scrollLeft);
+  // Hover pause
+  const handleMouseEnter = () => {
+    if (autoScrollRef.current && !isDragging) {
+      gsap.to(autoScrollRef.current, { timeScale: 0.2, duration: 0.5 });
+    }
   };
 
-  const handleMouseUp = () => {
-    setIsDragging(false);
-  };
-
-  const handleMouseMove = (e) => {
-    if (!isDragging) return;
-    e.preventDefault();
-    const x = e.pageX - scrollRef.current.offsetLeft;
-    const walk = (x - startX) * 2;
-    scrollRef.current.scrollLeft = scrollLeft - walk;
+  const handleMouseLeave = () => {
+    if (autoScrollRef.current && !isDragging) {
+      gsap.to(autoScrollRef.current, { timeScale: 1, duration: 0.5 });
+    }
   };
 
   return (
     <div className="hotel-carousel">
-      <div 
+      <div
         className="carousel-track"
-        ref={scrollRef}
-        onMouseDown={handleMouseDown}
-        onMouseUp={handleMouseUp}
-        onMouseLeave={handleMouseUp}
-        onMouseMove={handleMouseMove}
+        ref={trackRef}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
       >
-        {[...hotels, ...hotels].map((hotel, index) => (
-          <div key={`${hotel.id}-${index}`} className="carousel-item">
+        {hotels.map((hotel, index) => (
+          <div
+            key={`${hotel.id}-${index}`}
+            className="carousel-item"
+          >
             <div className="location-tag">
               <span className="flag">{hotel.flag}</span>
               <span>{hotel.location}</span>
             </div>
-            <img src={hotel.image} alt={hotel.name} draggable="false" />
+            <div className="image-wrapper">
+              <img src={hotel.image} alt={hotel.name} draggable="false" />
+              <div className="image-overlay"></div>
+            </div>
             <div className="hotel-info">
               <h3>{hotel.name}</h3>
               <span className="price">{hotel.price}</span>

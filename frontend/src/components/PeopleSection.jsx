@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useRef, useLayoutEffect, useState } from 'react';
+import { gsap } from 'gsap';
 
 const peopleData = [
   {
@@ -47,15 +48,128 @@ const peopleData = [
 ];
 
 const PeopleSection = () => {
+  const sectionRef = useRef(null);
   const [hoveredId, setHoveredId] = useState(null);
+  const imageRef = useRef(null);
+
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      // Section header animation
+      gsap.from('.people-section .section-header', {
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top 80%',
+          toggleActions: 'play none none reverse'
+        },
+        y: 40,
+        opacity: 0,
+        duration: 0.8,
+        ease: 'power2.out'
+      });
+
+      // Table rows stagger with fade up
+      gsap.from('.people-section .table-row', {
+        scrollTrigger: {
+          trigger: '.people-table',
+          start: 'top 85%',
+          toggleActions: 'play none none reverse'
+        },
+        y: 40,
+        opacity: 0,
+        duration: 0.7,
+        stagger: 0.08,
+        ease: 'power2.out'
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  // Handle hover with smooth image follow
+  const handleMouseEnter = (id, e) => {
+    setHoveredId(id);
+
+    if (imageRef.current) {
+      gsap.killTweensOf(imageRef.current);
+
+      gsap.fromTo(imageRef.current,
+        {
+          opacity: 0,
+          scale: 0.7,
+          rotation: -5
+        },
+        {
+          opacity: 1,
+          scale: 1,
+          rotation: 0,
+          duration: 0.4,
+          ease: 'back.out(1.7)'
+        }
+      );
+
+      // Position near cursor
+      gsap.set(imageRef.current, {
+        x: e.clientX - 75,
+        y: e.clientY - 100
+      });
+    }
+  };
+
+  const handleMouseMove = (e) => {
+    if (imageRef.current && hoveredId) {
+      gsap.to(imageRef.current, {
+        x: e.clientX - 75,
+        y: e.clientY - 100,
+        duration: 0.5,
+        ease: 'power3.out'
+      });
+    }
+  };
+
+  const handleMouseLeave = () => {
+    setHoveredId(null);
+
+    if (imageRef.current) {
+      gsap.to(imageRef.current, {
+        opacity: 0,
+        scale: 0.7,
+        rotation: 5,
+        duration: 0.3,
+        ease: 'power2.in'
+      });
+    }
+  };
+
+  // Row hover effect
+  const handleRowMouseEnter = (e) => {
+    const row = e.currentTarget;
+    gsap.to(row, {
+      backgroundColor: 'rgba(255, 255, 255, 0.03)',
+      x: 10,
+      duration: 0.3,
+      ease: 'power2.out'
+    });
+  };
+
+  const handleRowMouseLeave = (e) => {
+    const row = e.currentTarget;
+    gsap.to(row, {
+      backgroundColor: 'transparent',
+      x: 0,
+      duration: 0.3,
+      ease: 'power2.out'
+    });
+  };
+
+  const hoveredPerson = peopleData.find(p => p.id === hoveredId);
 
   return (
-    <section id="people" className="people-section">
+    <section id="people" className="people-section reveal-section" ref={sectionRef}>
       <div className="section-header">
         <h2 className="section-title light">
-          People<sup>(17)</sup>
+          People<sup>({peopleData.length.toString().padStart(2, '0')})</sup>
         </h2>
-        <a href="#all-people" className="explore-button light">
+        <a href="#all-people" className="explore-button light magnetic-light">
           Explore people
         </a>
       </div>
@@ -68,16 +182,20 @@ const PeopleSection = () => {
         </div>
 
         {peopleData.map((person) => (
-          <div 
+          <div
             key={person.id}
             className="table-row dark"
-            onMouseEnter={() => setHoveredId(person.id)}
-            onMouseLeave={() => setHoveredId(null)}
+            onMouseEnter={(e) => {
+              handleMouseEnter(person.id, e);
+              handleRowMouseEnter(e);
+            }}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={(e) => {
+              handleMouseLeave();
+              handleRowMouseLeave(e);
+            }}
           >
             <div className="col-name">
-              <div className={`hover-image ${hoveredId === person.id ? 'visible' : ''}`}>
-                <img src={person.image} alt={person.name} />
-              </div>
               <span className="person-name">{person.name}</span>
             </div>
             <div className="col-location">
@@ -91,6 +209,31 @@ const PeopleSection = () => {
             </div>
           </div>
         ))}
+      </div>
+
+      {/* Floating hover image */}
+      <div
+        ref={imageRef}
+        className="floating-preview-person"
+        style={{
+          position: 'fixed',
+          pointerEvents: 'none',
+          zIndex: 100,
+          opacity: 0,
+          width: '150px',
+          height: '200px',
+          borderRadius: '4px',
+          overflow: 'hidden',
+          boxShadow: '0 30px 80px rgba(0,0,0,0.5)'
+        }}
+      >
+        {hoveredPerson && (
+          <img
+            src={hoveredPerson.image}
+            alt={hoveredPerson.name}
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+          />
+        )}
       </div>
     </section>
   );

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useRef, useLayoutEffect, useState } from 'react';
+import { gsap } from 'gsap';
 
 const hotelsData = [
   {
@@ -58,15 +59,100 @@ const hotelsData = [
 ];
 
 const HotelsSection = () => {
+  const sectionRef = useRef(null);
   const [hoveredId, setHoveredId] = useState(null);
+  const imageRef = useRef(null);
+
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      // Section header animation
+      gsap.from('.hotels-section .section-header', {
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top 80%',
+          toggleActions: 'play none none reverse'
+        },
+        y: 40,
+        opacity: 0,
+        duration: 0.8,
+        ease: 'power2.out'
+      });
+
+      // Table rows stagger animation
+      gsap.from('.table-row', {
+        scrollTrigger: {
+          trigger: '.hotels-table',
+          start: 'top 80%',
+          toggleActions: 'play none none reverse'
+        },
+        y: 30,
+        opacity: 0,
+        duration: 0.6,
+        stagger: 0.1,
+        ease: 'power2.out'
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  // Handle hover image animation
+  const handleMouseEnter = (id, e) => {
+    setHoveredId(id);
+
+    if (imageRef.current) {
+      gsap.killTweensOf(imageRef.current);
+
+      gsap.fromTo(imageRef.current,
+        {
+          opacity: 0,
+          scale: 0.8,
+          x: e.clientX - 100,
+          y: e.clientY - 75
+        },
+        {
+          opacity: 1,
+          scale: 1,
+          duration: 0.3,
+          ease: 'power2.out'
+        }
+      );
+    }
+  };
+
+  const handleMouseMove = (e) => {
+    if (imageRef.current && hoveredId) {
+      gsap.to(imageRef.current, {
+        x: e.clientX - 100,
+        y: e.clientY - 75,
+        duration: 0.3,
+        ease: 'power2.out'
+      });
+    }
+  };
+
+  const handleMouseLeave = () => {
+    setHoveredId(null);
+
+    if (imageRef.current) {
+      gsap.to(imageRef.current, {
+        opacity: 0,
+        scale: 0.8,
+        duration: 0.2,
+        ease: 'power2.in'
+      });
+    }
+  };
+
+  const hoveredHotel = hotelsData.find(h => h.id === hoveredId);
 
   return (
-    <section id="hotels" className="hotels-section">
+    <section id="hotels" className="hotels-section reveal-section" ref={sectionRef}>
       <div className="section-header">
         <h2 className="section-title">
-          Hotels<sup>(12)</sup>
+          Hotels<sup>({hotelsData.length.toString().padStart(2, '0')})</sup>
         </h2>
-        <a href="#all-hotels" className="explore-button">
+        <a href="#all-hotels" className="explore-button magnetic">
           Explore hotels
         </a>
       </div>
@@ -79,16 +165,14 @@ const HotelsSection = () => {
         </div>
 
         {hotelsData.map((hotel) => (
-          <div 
+          <div
             key={hotel.id}
             className="table-row"
-            onMouseEnter={() => setHoveredId(hotel.id)}
-            onMouseLeave={() => setHoveredId(null)}
+            onMouseEnter={(e) => handleMouseEnter(hotel.id, e)}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
           >
             <div className="col-name">
-              <div className={`hover-image ${hoveredId === hotel.id ? 'visible' : ''}`}>
-                <img src={hotel.image} alt={hotel.name} />
-              </div>
               <span className="hotel-name">{hotel.name}</span>
             </div>
             <div className="col-location">
@@ -101,6 +185,31 @@ const HotelsSection = () => {
             </div>
           </div>
         ))}
+      </div>
+
+      {/* Floating hover image */}
+      <div
+        ref={imageRef}
+        className="floating-preview"
+        style={{
+          position: 'fixed',
+          pointerEvents: 'none',
+          zIndex: 100,
+          opacity: 0,
+          width: '200px',
+          height: '150px',
+          borderRadius: '8px',
+          overflow: 'hidden',
+          boxShadow: '0 20px 60px rgba(0,0,0,0.3)'
+        }}
+      >
+        {hoveredHotel && (
+          <img
+            src={hoveredHotel.image}
+            alt={hoveredHotel.name}
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+          />
+        )}
       </div>
     </section>
   );

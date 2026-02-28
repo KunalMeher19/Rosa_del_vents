@@ -1,4 +1,5 @@
-import React, { useState, useRef } from 'react';
+import React, { useRef, useLayoutEffect, useState } from 'react';
+import { gsap } from 'gsap';
 
 const picksData = [
   {
@@ -44,45 +45,107 @@ const picksData = [
 ];
 
 const EditorsPicks = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const sectionRef = useRef(null);
   const carouselRef = useRef(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      // Section header animation
+      gsap.from('.editors-picks .section-header', {
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top 80%',
+          toggleActions: 'play none none reverse'
+        },
+        y: 40,
+        opacity: 0,
+        duration: 0.8,
+        ease: 'power2.out'
+      });
+
+      // Cards stagger animation
+      gsap.from('.pick-card', {
+        scrollTrigger: {
+          trigger: carouselRef.current,
+          start: 'top 85%',
+          toggleActions: 'play none none reverse'
+        },
+        y: 60,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.1,
+        ease: 'power2.out'
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
 
   const scrollToIndex = (index) => {
-    if (carouselRef.current) {
-      const cardWidth = carouselRef.current.children[0].offsetWidth + 16; // including gap
-      carouselRef.current.scrollTo({
-        left: index * cardWidth,
-        behavior: 'smooth'
-      });
-    }
+    if (isAnimating || !carouselRef.current) return;
+
+    setIsAnimating(true);
+    const cards = carouselRef.current.children;
+    const cardWidth = cards[0].offsetWidth + 16; // including gap
+
+    gsap.to(carouselRef.current, {
+      scrollLeft: index * cardWidth,
+      duration: 0.8,
+      ease: 'power3.out',
+      onComplete: () => setIsAnimating(false)
+    });
+
+    setCurrentIndex(index);
   };
 
   const handlePrev = () => {
     const newIndex = currentIndex > 0 ? currentIndex - 1 : picksData.length - 1;
-    setCurrentIndex(newIndex);
     scrollToIndex(newIndex);
   };
 
   const handleNext = () => {
     const newIndex = currentIndex < picksData.length - 1 ? currentIndex + 1 : 0;
-    setCurrentIndex(newIndex);
     scrollToIndex(newIndex);
   };
 
+  // Card hover effect
+  const handleCardMouseEnter = (e) => {
+    const card = e.currentTarget;
+    const img = card.querySelector('img');
+
+    gsap.to(card, { y: -10, duration: 0.4, ease: 'power2.out' });
+    gsap.to(img, { scale: 1.08, duration: 0.6, ease: 'power2.out' });
+  };
+
+  const handleCardMouseLeave = (e) => {
+    const card = e.currentTarget;
+    const img = card.querySelector('img');
+
+    gsap.to(card, { y: 0, duration: 0.4, ease: 'power2.out' });
+    gsap.to(img, { scale: 1, duration: 0.6, ease: 'power2.out' });
+  };
+
   return (
-    <section className="editors-picks">
+    <section className="editors-picks reveal-section" ref={sectionRef}>
       <div className="section-header">
         <h2 className="section-title">
-          Editor's picks<sup>(05)</sup>
+          Editor's picks<sup>(0{picksData.length})</sup>
         </h2>
-        <a href="#all-hotels" className="explore-button">
+        <a href="#all-hotels" className="explore-button magnetic">
           See all hotels
         </a>
       </div>
 
       <div className="picks-carousel" ref={carouselRef}>
         {picksData.map((hotel) => (
-          <div key={hotel.id} className="pick-card">
+          <div
+            key={hotel.id}
+            className="pick-card"
+            onMouseEnter={handleCardMouseEnter}
+            onMouseLeave={handleCardMouseLeave}
+          >
             <div className="location-tag">
               <span className="flag">{hotel.flag}</span>
               <span>{hotel.location}</span>
@@ -99,14 +162,22 @@ const EditorsPicks = () => {
       </div>
 
       <div className="carousel-controls">
-        <button className="control-btn" onClick={handlePrev} aria-label="Previous">
+        <button
+          className="control-btn magnetic-small"
+          onClick={handlePrev}
+          aria-label="Previous"
+        >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M19 12H5M12 19l-7-7 7-7"/>
+            <path d="M19 12H5M12 19l-7-7 7-7" />
           </svg>
         </button>
-        <button className="control-btn" onClick={handleNext} aria-label="Next">
+        <button
+          className="control-btn magnetic-small"
+          onClick={handleNext}
+          aria-label="Next"
+        >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M5 12h14M12 5l7 7-7 7"/>
+            <path d="M5 12h14M12 5l7 7-7 7" />
           </svg>
         </button>
       </div>
