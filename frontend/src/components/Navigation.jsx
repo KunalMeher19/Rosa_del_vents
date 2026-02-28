@@ -54,7 +54,7 @@ const Navigation = ({ menuOpen, setMenuOpen }) => {
         <>
             <nav ref={navRef} className={`main-nav ${scrolled ? 'scrolled' : ''}`} style={{ opacity: 0 }}>
                 <div className="nav-left">
-                    <a href="/" className="logo" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
+                    <a href="#hero" className="logo">
                         Rosa dels Vents
                     </a>
                 </div>

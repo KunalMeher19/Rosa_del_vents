@@ -41,7 +41,30 @@ function AppInner() {
 
     gsap.ticker.lagSmoothing(0);
 
+    const handleAnchorClick = (e) => {
+      const anchor = e.target.closest('a');
+      if (!anchor) return;
+
+      const href = anchor.getAttribute('href');
+
+      if (href && href.startsWith('#')) {
+        e.preventDefault();
+
+        if (href === '#') {
+          lenis.scrollTo(0, { duration: 1.5 });
+        } else {
+          // Add a small offset to account for the fixed header
+          lenis.scrollTo(href, { offset: -80, duration: 1.5 });
+          // Optionally update the URL without jumping
+          window.history.pushState(null, '', href);
+        }
+      }
+    };
+
+    document.addEventListener('click', handleAnchorClick);
+
     return () => {
+      document.removeEventListener('click', handleAnchorClick);
       lenis.destroy();
       gsap.ticker.remove(lenis.raf);
     };

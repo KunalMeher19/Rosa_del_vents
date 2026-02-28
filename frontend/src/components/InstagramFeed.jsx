@@ -38,22 +38,6 @@ const InstagramFeed = () => {
     return () => ctx.revert();
   }, []);
 
-  const handleMouseEnter = (index) => {
-    const item = itemsRef.current[index];
-    if (item) {
-      gsap.to(item, { scale: 1.05, zIndex: 10, duration: 0.4, ease: 'power2.out' });
-      itemsRef.current.forEach((other, i) => {
-        if (i !== index && other) gsap.to(other, { opacity: 0.5, duration: 0.3 });
-      });
-    }
-  };
-
-  const handleMouseLeave = () => {
-    itemsRef.current.forEach(item => {
-      if (item) gsap.to(item, { scale: 1, opacity: 1, zIndex: 1, duration: 0.4, ease: 'power2.out' });
-    });
-  };
-
   return (
     <section id="galeria" className="instagram-feed reveal-section" ref={sectionRef}>
       <h2 className="instagram-section-title">Galería</h2>
@@ -63,17 +47,8 @@ const InstagramFeed = () => {
             key={img.id}
             ref={(el) => (itemsRef.current[index] = el)}
             className={`insta-item insta-item-${index + 1}`}
-            onMouseEnter={() => handleMouseEnter(index)}
-            onMouseLeave={handleMouseLeave}
           >
             <img src={img.src} alt={img.alt} />
-            <div className="insta-overlay">
-              <svg className="insta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <circle cx="12" cy="12" r="4" />
-                <path d="M16 8h.01" />
-                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
-              </svg>
-            </div>
           </div>
         ))}
       </div>

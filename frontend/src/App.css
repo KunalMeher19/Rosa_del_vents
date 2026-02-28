@@ -884,10 +884,11 @@ img {
   letter-spacing: 0.15em;
   color: var(--color-text-muted);
   font-weight: 500;
+  text-transform: uppercase;
 }
 
 .table-header.dark {
-  border-bottom-color: var(--color-border-dark);
+  border-bottom-color: rgba(255, 255, 255, 0.1);
   color: rgba(255, 255, 255, 0.4);
 }
 
@@ -895,7 +896,7 @@ img {
   display: grid;
   grid-template-columns: 2fr 1.5fr 3fr;
   gap: 2rem;
-  padding: 1.8rem 0;
+  padding: 1.5rem 0;
   border-bottom: 1px solid var(--color-border);
   align-items: center;
   position: relative;
@@ -904,7 +905,7 @@ img {
 }
 
 .table-row.dark {
-  border-bottom-color: var(--color-border-dark);
+  border-bottom-color: rgba(255, 255, 255, 0.15);
   color: var(--color-text-light);
 }
 
@@ -919,11 +920,12 @@ img {
   font-size: 0.75rem;
   letter-spacing: 0.08em;
   font-weight: 500;
+  text-transform: uppercase;
   transition: transform 0.3s var(--transition-smooth);
 }
 
 .col-location {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   color: var(--color-text-muted);
   transition: color 0.3s ease;
 }
@@ -933,11 +935,11 @@ img {
 }
 
 .table-row.dark .col-location {
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .table-row.dark:hover .col-location {
-  color: rgba(255, 255, 255, 0.9);
+  color: #fff;
 }
 
 .col-facts {
@@ -965,14 +967,16 @@ img {
 
 .table-row.dark .fact-tag,
 .table-row.dark .occupation-tag {
-  border-color: rgba(255, 255, 255, 0.2);
-  color: rgba(255, 255, 255, 0.7);
+  border-color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.9);
+  padding: 0.35rem 0.9rem;
+  font-size: 0.6rem;
 }
 
 .table-row.dark:hover .fact-tag,
 .table-row.dark:hover .occupation-tag {
-  border-color: rgba(255, 255, 255, 0.5);
-  color: var(--color-text-light);
+  border-color: #fff;
+  color: #fff;
 }
 
 /* Floating preview images */
@@ -1281,41 +1285,12 @@ img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.6s var(--transition-smooth);
-}
-
-.insta-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
-
-.insta-item:hover .insta-overlay {
-  opacity: 1;
+  transition: transform 0.6s var(--transition-smooth), filter 0.6s var(--transition-smooth);
 }
 
 .insta-item:hover img {
-  transform: scale(1.1);
-}
-
-.insta-icon {
-  width: 32px;
-  height: 32px;
-  color: var(--color-text-light);
-  transform: scale(0);
-  transition: transform 0.4s var(--transition-bounce);
-}
-
-.insta-item:hover .insta-icon {
-  transform: scale(1);
+  transform: scale(1.05);
+  filter: brightness(1.1);
 }
 
 .instagram-cta {
