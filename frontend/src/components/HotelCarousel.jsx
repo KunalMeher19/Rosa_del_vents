@@ -1,9 +1,9 @@
 import React, { useRef, useLayoutEffect, useState } from 'react';
 import { gsap } from 'gsap';
-import { Draggable } from 'gsap/all';
+import { Draggable, ScrollTrigger } from 'gsap/all';
 import { useLang } from '../context/LanguageContext';
 
-gsap.registerPlugin(Draggable);
+gsap.registerPlugin(Draggable, ScrollTrigger);
 
 const BOOKING_URL = 'https://www.booking.com/hotel/es/hostal-rosa-dels-vents.es.html';
 
@@ -61,12 +61,15 @@ const rooms = [
   }
 ];
 
-const allRooms = [...rooms, ...rooms];
+const allRooms = [...rooms, ...rooms, ...rooms, ...rooms];
 
 const HotelCarousel = () => {
   const wrapperRef = useRef(null);
   const trackRef = useRef(null);
-  const autoScrollRef = useRef(null);
+  const requestRef = useRef(null);
+  const xPos = useRef(0);
+  const direction = useRef(1); // 1 = right, -1 = left
+  const velocity = useRef(1);
   const [isDragging, setIsDragging] = useState(false);
   const { t, lang } = useLang();
 
@@ -74,48 +77,106 @@ const HotelCarousel = () => {
     const track = trackRef.current;
     if (!track) return;
 
-    const raf = requestAnimationFrame(() => {
-      const singleSetWidth = track.scrollWidth / 2;
+    // Small timeout ensures font/image layout has rendered so scrollWidth is accurate
+    const initRAF = requestAnimationFrame(() => {
+      const setWidth = track.scrollWidth / 4;
+      const wrapX = gsap.utils.wrap(-setWidth * 2, -setWidth);
 
-      autoScrollRef.current = gsap.fromTo(track,
-        { x: 0 },
-        {
-          x: -singleSetWidth,
-          duration: 35,
-          ease: 'none',
-          repeat: -1,
-          repeatDelay: 0,
-          onRepeat: () => gsap.set(track, { x: 0 }),
+      xPos.current = -setWidth * 2;
+      gsap.set(track, { x: xPos.current });
+
+      const setX = gsap.quickSetter(track, "x", "px");
+
+      let dragActive = false;
+
+      const loop = () => {
+        if (!dragActive) {
+          xPos.current += (direction.current * velocity.current * 0.8);
+          xPos.current = wrapX(xPos.current);
+          setX(xPos.current);
         }
-      );
+        requestRef.current = requestAnimationFrame(loop);
+      };
 
-      Draggable.create(track, {
-        type: 'x',
-        inertia: false,
-        onDragStart: () => {
-          setIsDragging(true);
-          if (autoScrollRef.current) autoScrollRef.current.pause();
-        },
-        onDragEnd: () => {
-          setIsDragging(false);
-          gsap.delayedCall(1.5, () => {
-            if (autoScrollRef.current) autoScrollRef.current.play();
+      const st = ScrollTrigger.create({
+        onUpdate: (self) => {
+          // Scroll down moves to left side (-1), Scroll up moves right (1)
+          direction.current = self.direction === 1 ? -1 : 1;
+          velocity.current = 2.5; // 2.5x speed multiplier
+
+          gsap.killTweensOf(velocity);
+          gsap.to(velocity, {
+            current: 1,
+            duration: 1,
+            ease: "power2.out",
+            onComplete: () => {
+              direction.current = 1; // back to normal rightward flow
+            }
           });
         }
       });
+
+      const drag = Draggable.create(track, {
+        type: 'x',
+        inertia: false,
+        onPressInit: () => {
+          dragActive = true;
+          setIsDragging(true);
+        },
+        onDrag: function () {
+          let newX = wrapX(this.x);
+          if (newX !== this.x) {
+            gsap.set(track, { x: newX });
+            this.update();
+            xPos.current = newX;
+          } else {
+            xPos.current = this.x;
+          }
+        },
+        onRelease: function () {
+          dragActive = false;
+          setIsDragging(false);
+          direction.current = this.deltaX > 0 ? 1 : -1;
+          velocity.current = 2; // slight momentum boost post drag
+
+          gsap.killTweensOf(velocity);
+          gsap.to(velocity, {
+            current: 1,
+            duration: 1,
+            ease: "power2.out",
+            onComplete: () => {
+              direction.current = 1;
+            }
+          });
+        }
+      });
+
+      requestRef.current = requestAnimationFrame(loop);
+
+      track.__cleanup = () => {
+        st.kill();
+        drag[0].kill();
+      };
     });
 
     return () => {
-      cancelAnimationFrame(raf);
-      if (autoScrollRef.current) autoScrollRef.current.kill();
+      cancelAnimationFrame(initRAF);
+      cancelAnimationFrame(requestRef.current);
+      if (track.__cleanup) track.__cleanup();
     };
   }, []);
 
   const handleMouseEnter = () => {
-    if (autoScrollRef.current && !isDragging) gsap.to(autoScrollRef.current, { timeScale: 0.15, duration: 0.4 });
+    if (!isDragging) {
+      gsap.to(velocity, { current: 0.2, duration: 0.4 });
+    }
   };
+
   const handleMouseLeave = () => {
-    if (autoScrollRef.current && !isDragging) gsap.to(autoScrollRef.current, { timeScale: 1, duration: 0.4 });
+    if (!isDragging) {
+      gsap.to(velocity, { current: 1, duration: 0.4 });
+      direction.current = 1;
+    }
   };
 
   return (
