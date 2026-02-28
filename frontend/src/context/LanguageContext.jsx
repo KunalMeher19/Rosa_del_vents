@@ -29,11 +29,11 @@ const translations = {
         rooms_night: '/noche',
 
         // Amenities
-        amenities_title: 'El hostal',
-        amenities_explore: 'Contactar',
-        amenities_col1: 'HABITACIÓN',
+        amenities_title: 'Habitaciones',
+        amenities_explore: 'Ver habitaciones',
+        amenities_col1: 'NOMBRE',
         amenities_col2: 'CAPACIDAD',
-        amenities_col3: 'CARACTERÍSTICAS',
+        amenities_col3: 'DATOS RÁPIDOS',
 
         // Location Spotlight
         location_label: 'UBICACIÓN',
@@ -104,11 +104,11 @@ const translations = {
         rooms_night: '/night',
 
         // Amenities
-        amenities_title: 'The hostel',
-        amenities_explore: 'Contact us',
-        amenities_col1: 'ROOM',
+        amenities_title: 'Rooms',
+        amenities_explore: 'Explore rooms',
+        amenities_col1: 'NAME',
         amenities_col2: 'CAPACITY',
-        amenities_col3: 'FEATURES',
+        amenities_col3: 'FAST FACTS',
 
         // Location Spotlight
         location_label: 'LOCATION',

@@ -1,7 +1,7 @@
 /* HAFH Website Styles - GSAP Enhanced Version */
 
 /* Font Import */
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap');
 
 /* CSS Variables */
 :root {
@@ -14,7 +14,7 @@
   --color-accent: #c9a962;
   --color-border: #e2ddd1;
   --color-border-dark: #333333;
-  --font-serif: 'Cormorant Garamond', serif;
+  --font-serif: 'Playfair Display', serif;
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
   --transition-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -536,7 +536,7 @@ img {
 .hero-button {
   display: inline-block;
   padding: 1rem 2rem;
-  background: var(--color-text);
+  background: var(--color-bg-dark);
   color: var(--color-text-light);
   border-radius: 100px;
   font-size: 0.75rem;
@@ -776,9 +776,9 @@ img {
   justify-content: center;
   padding: 0.8rem 1.6rem;
   border-radius: 100px;
-  background: transparent;
-  color: var(--color-text);
-  border: 1px solid var(--color-text);
+  background: var(--color-bg-dark);
+  color: var(--color-text-light);
+  border: 1px solid var(--color-bg-dark);
   font-size: 0.75rem;
   font-weight: 500;
   letter-spacing: 0.05em;
@@ -789,8 +789,8 @@ img {
 }
 
 .explore-button:hover {
-  background: var(--color-text);
-  color: var(--color-bg);
+  background: transparent;
+  color: var(--color-text);
 }
 
 .explore-button.light {
@@ -817,7 +817,7 @@ img {
 
 .explore-button {
   padding: 0.8rem 1.6rem;
-  border: 1px solid var(--color-text);
+  border: 1px solid var(--color-bg-dark);
   border-radius: 100px;
   font-size: 0.7rem;
   font-weight: 500;
@@ -825,8 +825,8 @@ img {
   transition: all 0.4s var(--transition-smooth);
   position: relative;
   overflow: hidden;
-  background: transparent;
-  color: var(--color-text);
+  background: var(--color-bg-dark);
+  color: var(--color-text-light);
 }
 
 .explore-button::before {
@@ -843,7 +843,7 @@ img {
 }
 
 .explore-button:hover {
-  color: var(--color-text-light);
+  color: var(--color-text);
 }
 
 .explore-button:hover::before {
@@ -876,31 +876,35 @@ img {
 
 .table-header {
   display: grid;
-  grid-template-columns: 2fr 1.5fr 3fr;
-  gap: 2rem;
+  grid-template-columns: 2.5fr 1.5fr 3.5fr;
+  gap: 1.5rem;
   padding: 1.2rem 0;
+  border-top: 1px solid var(--color-border);
   border-bottom: 1px solid var(--color-border);
   font-size: 0.65rem;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.05em;
   color: var(--color-text-muted);
-  font-weight: 500;
+  font-weight: 400;
   text-transform: uppercase;
+  margin-bottom: 1rem;
 }
 
 .table-header.dark {
+  border-top-color: rgba(255, 255, 255, 0.1);
   border-bottom-color: rgba(255, 255, 255, 0.1);
   color: rgba(255, 255, 255, 0.4);
 }
 
 .table-row {
   display: grid;
-  grid-template-columns: 2fr 1.5fr 3fr;
-  gap: 2rem;
-  padding: 1.5rem 0;
+  grid-template-columns: 2.5fr 1.5fr 3.5fr;
+  gap: 1.5rem;
+  padding: 2.5rem 0;
   border-bottom: 1px solid var(--color-border);
   align-items: center;
   position: relative;
   cursor: pointer;
+  transition: background-color 0.3s ease;
   will-change: transform, background-color;
 }
 
@@ -917,10 +921,11 @@ img {
 
 .hotel-name,
 .person-name {
-  font-size: 0.75rem;
-  letter-spacing: 0.08em;
-  font-weight: 500;
+  font-size: 0.70rem;
+  letter-spacing: 0.02em;
+  font-weight: 400;
   text-transform: uppercase;
+  color: var(--color-text);
   transition: transform 0.3s var(--transition-smooth);
 }
 
@@ -950,14 +955,15 @@ img {
 
 .fact-tag,
 .occupation-tag {
-  padding: 0.5rem 1rem;
-  border: 1px solid var(--color-border);
+  padding: 0.4rem 1rem;
+  border: 1px solid var(--color-text);
   border-radius: 100px;
   font-size: 0.65rem;
-  letter-spacing: 0.08em;
-  color: var(--color-text-muted);
+  letter-spacing: 0.05em;
+  color: var(--color-text);
   white-space: nowrap;
   transition: all 0.3s ease;
+  background: transparent;
 }
 
 .table-row:hover .fact-tag {
