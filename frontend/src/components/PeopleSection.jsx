@@ -36,7 +36,7 @@ const PeopleSection = () => {
   }, []);
 
   return (
-    <section id="nosotros" className="people-section reveal-section" ref={sectionRef} style={{ backgroundColor: '#060010', paddingBottom: '0' }}>
+    <section id="nosotros" className="people-section reveal-section dark-theme" ref={sectionRef} style={{ backgroundColor: 'var(--color-bg-dark)', paddingBottom: '0' }}>
       <div className="section-header" style={{ marginBottom: '4rem' }}>
         <h2 className="section-title light" style={{ color: '#fff' }}>{t.about_title}</h2>
         <a href="#contacto" className="explore-button light magnetic-light" style={{ color: '#fff', borderColor: '#fff' }}>{t.about_explore}</a>
@@ -47,9 +47,9 @@ const PeopleSection = () => {
           items={menuItems}
           speed={15}
           textColor="#ffffff"
-          bgColor="#060010"
+          bgColor="var(--color-bg-dark)"
           marqueeBgColor="#ffffff"
-          marqueeTextColor="#060010"
+          marqueeTextColor="var(--color-bg-dark)"
           borderColor="#333333"
         />
       </div>

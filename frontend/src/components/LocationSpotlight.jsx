@@ -37,14 +37,14 @@ const LocationSpotlight = () => {
         y: -120, rotation: -3, ease: 'none'
       });
 
-      gsap.to(floatImg1Ref.current, { y: '+=15', duration: 3, ease: 'sine.inOut', yoyo: true, repeat: -1 });
-      gsap.to(floatImg2Ref.current, { y: '+=20', duration: 4, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: 1 });
+      gsap.to(floatImg1Ref.current.querySelector('img'), { y: '+=15', duration: 3, ease: 'sine.inOut', yoyo: true, repeat: -1 });
+      gsap.to(floatImg2Ref.current.querySelector('img'), { y: '+=20', duration: 4, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: 1 });
     }, sectionRef);
     return () => ctx.revert();
   }, []);
 
   return (
-    <section id="ubicacion" className="location-spotlight reveal-section" ref={sectionRef}>
+    <section id="ubicacion" className="location-spotlight reveal-section dark-theme" ref={sectionRef}>
       <div className="spotlight-background" ref={bgRef}>
         <img
           src="https://images.unsplash.com/photo-1566218246241-934ae4d9e40a?w=1600&q=80"

@@ -11,7 +11,7 @@ const Navigation = ({ menuOpen, setMenuOpen }) => {
     const linksRef = useRef([]);
     const [scrolled, setScrolled] = useState(false);
     const [hidden, setHidden] = useState(false);
-    const [theme, setTheme] = useState('dark'); // 'dark' = white text, 'light' = dark text
+    const [theme, setTheme] = useState('light');
     const lastScrollY = useRef(0);
     const { lang, setLang, t } = useLang();
 
@@ -32,19 +32,19 @@ const Navigation = ({ menuOpen, setMenuOpen }) => {
             // Check theme underneath nav
             const navMidpointY = 50; // Approximating nav mid height on screen
 
-            // Gather all sections explicitly marked as having a light background theme
-            const lightSections = document.querySelectorAll('.light-theme');
-            let isOverLight = false;
+            // Gather all sections explicitly marked as having a dark background theme
+            const darkSections = document.querySelectorAll('.dark-theme');
+            let isOverDark = false;
 
-            lightSections.forEach(section => {
+            darkSections.forEach(section => {
                 const rect = section.getBoundingClientRect();
                 // Check if the top of the nav intersects this section
                 if (rect.top <= navMidpointY && rect.bottom >= navMidpointY) {
-                    isOverLight = true;
+                    isOverDark = true;
                 }
             });
 
-            setTheme(isOverLight ? 'light' : 'dark');
+            setTheme(isOverDark ? 'dark' : 'light');
 
             lastScrollY.current = currentScrollY;
         };
@@ -93,7 +93,7 @@ const Navigation = ({ menuOpen, setMenuOpen }) => {
         <>
             <nav
                 ref={navRef}
-                className={`main-nav ${scrolled ? 'scrolled' : ''} ${hidden ? 'nav-hidden' : ''} theme-${theme}`}
+                className={`main-nav ${!scrolled ? '' : 'scrolled'} ${hidden ? 'hidden' : ''} ${theme === 'light' ? '' : 'theme-dark'}`}
                 style={{ opacity: 0 }}
             >
                 <div className="nav-left">

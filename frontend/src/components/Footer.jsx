@@ -32,7 +32,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="main-footer reveal-section" ref={footerRef}>
+    <footer className="main-footer reveal-section dark-theme" ref={footerRef}>
       <div className="footer-top">
         <div className="footer-section">
           <h3 className="footer-title">{lang === 'es' ? '¿Tienes alguna pregunta?' : 'Have a question?'}</h3>

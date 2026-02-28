@@ -57,10 +57,10 @@ const InstagramFeed = () => {
   }, []);
 
   return (
-    <section id="galeria" className="instagram-feed reveal-section" ref={sectionRef} style={{ padding: '8rem 2rem', minHeight: '120vh' }}>
+    <section id="galeria" className="instagram-feed reveal-section dark-theme" ref={sectionRef} style={{ padding: '8rem 2rem', minHeight: '120vh' }}>
       <h2 className="instagram-section-title" style={{ marginBottom: '6rem', color: '#fff' }}>Galería</h2>
 
-      <div ref={masonryContainerRef} style={{ height: '140vh', position: 'relative', width: '100%', maxWidth: '1400px', margin: '0 auto 4rem auto' }}>
+      <div ref={masonryContainerRef} style={{ height: '110vh', position: 'relative', width: '100%', maxWidth: '1400px', margin: '0 auto 4rem auto' }}>
         {masonryInView && (
           <Masonry
             items={galleryImages}
