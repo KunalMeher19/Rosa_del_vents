@@ -26,7 +26,10 @@ const InstagramFeed = () => {
       ([entry]) => {
         if (entry.isIntersecting) {
           setMasonryInView(true);
-          observer.disconnect();
+        } else {
+          // Unmount the component when we scroll away so it can trigger its mount animation again when we return.
+          // To prevent rapid flashing if we just barely intersect the top, we use a small threshold
+          setMasonryInView(false);
         }
       },
       { threshold: 0.1 }

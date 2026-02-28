@@ -11,6 +11,7 @@ const Navigation = ({ menuOpen, setMenuOpen }) => {
     const linksRef = useRef([]);
     const [scrolled, setScrolled] = useState(false);
     const [hidden, setHidden] = useState(false);
+    const [theme, setTheme] = useState('dark'); // 'dark' = white text, 'light' = dark text
     const lastScrollY = useRef(0);
     const { lang, setLang, t } = useLang();
 
@@ -27,6 +28,23 @@ const Navigation = ({ menuOpen, setMenuOpen }) => {
             } else if (currentScrollY < lastScrollY.current) {
                 setHidden(false);
             }
+
+            // Check theme underneath nav
+            const navMidpointY = 50; // Approximating nav mid height on screen
+
+            // Gather all sections explicitly marked as having a light background theme
+            const lightSections = document.querySelectorAll('.light-theme');
+            let isOverLight = false;
+
+            lightSections.forEach(section => {
+                const rect = section.getBoundingClientRect();
+                // Check if the top of the nav intersects this section
+                if (rect.top <= navMidpointY && rect.bottom >= navMidpointY) {
+                    isOverLight = true;
+                }
+            });
+
+            setTheme(isOverLight ? 'light' : 'dark');
 
             lastScrollY.current = currentScrollY;
         };
@@ -75,7 +93,7 @@ const Navigation = ({ menuOpen, setMenuOpen }) => {
         <>
             <nav
                 ref={navRef}
-                className={`main-nav ${scrolled ? 'scrolled' : ''} ${hidden ? 'nav-hidden' : ''}`}
+                className={`main-nav ${scrolled ? 'scrolled' : ''} ${hidden ? 'nav-hidden' : ''} theme-${theme}`}
                 style={{ opacity: 0 }}
             >
                 <div className="nav-left">

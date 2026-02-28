@@ -230,6 +230,33 @@ img {
   transform: translateY(0);
 }
 
+/* Nav Dynamic Theme Colors */
+.main-nav.theme-light .logo {
+  color: var(--color-bg);
+}
+
+.main-nav.theme-light .lang-toggle {
+  color: var(--color-bg);
+}
+
+.main-nav.theme-light .nav-button {
+  background: transparent;
+  color: var(--color-bg);
+  border-color: var(--color-bg);
+}
+
+.main-nav.theme-light .nav-button::before {
+  background: var(--color-bg);
+}
+
+.main-nav.theme-light .nav-button:hover {
+  color: var(--color-text);
+}
+
+.main-nav.theme-light .menu-toggle .hamburger span {
+  background: var(--color-bg);
+}
+
 .nav-button.light {
   background: var(--color-text-light);
   color: var(--color-text);
