@@ -66,7 +66,11 @@ const EditorsPicks = () => {
       });
 
       Draggable.create(carouselRef.current, {
-        type: 'scrollLeft',
+        type: 'x',
+        bounds: {
+          minX: - (carouselRef.current.scrollWidth - carouselRef.current.parentElement.offsetWidth),
+          maxX: 0
+        },
         edgeResistance: 0.8,
         inertia: false,
         onPress: () => gsap.killTweensOf(carouselRef.current)
@@ -85,26 +89,41 @@ const EditorsPicks = () => {
     if (!carouselRef.current) return;
     gsap.killTweensOf(carouselRef.current);
     const cardWidth = getCardWidth();
+
+    const wrapperWidth = carouselRef.current.parentElement.offsetWidth;
+    const maxScroll = (carouselRef.current.scrollWidth - wrapperWidth) * -1;
+
+    let targetX = -(index * cardWidth);
+    if (targetX < maxScroll) targetX = maxScroll;
+    if (targetX > 0) targetX = 0;
+
     gsap.to(carouselRef.current, {
-      scrollLeft: index * cardWidth,
+      x: targetX,
       duration: 1.5, // nice slow and smooth duration
       ease: 'power2.inOut'
     });
   };
 
   const handlePrev = () => {
+    if (!carouselRef.current) return;
+    const currentX = gsap.getProperty(carouselRef.current, "x");
     const cardWidth = getCardWidth();
-    if (!cardWidth || !carouselRef.current) return;
-    const currentIdx = Math.round(carouselRef.current.scrollLeft / cardWidth);
-    const nextIdx = currentIdx > 0 ? currentIdx - 1 : nearbyData.length - 1;
+    if (!cardWidth) return;
+
+    const currentIdx = Math.abs(Math.round(currentX / cardWidth));
+    const nextIdx = currentIdx > 0 ? currentIdx - 1 : 0;
     scrollToIndex(nextIdx);
   };
 
   const handleNext = () => {
+    if (!carouselRef.current) return;
+    const currentX = gsap.getProperty(carouselRef.current, "x");
     const cardWidth = getCardWidth();
-    if (!cardWidth || !carouselRef.current) return;
-    const currentIdx = Math.round(carouselRef.current.scrollLeft / cardWidth);
-    const nextIdx = currentIdx < nearbyData.length - 1 ? currentIdx + 1 : 0;
+    if (!cardWidth) return;
+
+    const maxIdx = Math.floor(carouselRef.current.scrollWidth / cardWidth) - 1;
+    const currentIdx = Math.abs(Math.round(currentX / cardWidth));
+    const nextIdx = currentIdx < maxIdx ? currentIdx + 1 : maxIdx;
     scrollToIndex(nextIdx);
   };
 
@@ -126,26 +145,28 @@ const EditorsPicks = () => {
         <a href="#contacto" className="explore-button magnetic">{t.nearby_explore}</a>
       </div>
 
-      <div className="picks-carousel" ref={carouselRef}>
-        {nearbyData.map((place) => (
-          <div
-            key={place.id}
-            className="pick-card"
-            onMouseEnter={handleCardEnter}
-            onMouseLeave={handleCardLeave}
-          >
-            <div className="location-tag">
-              <span className="flag">{place.flag}</span>
-              <span>{lang === 'es' ? place.locationEs : place.locationEn}</span>
+      <div className="picks-carousel-wrapper">
+        <div className="picks-carousel" ref={carouselRef}>
+          {nearbyData.map((place) => (
+            <div
+              key={place.id}
+              className="pick-card"
+              onMouseEnter={handleCardEnter}
+              onMouseLeave={handleCardLeave}
+            >
+              <div className="location-tag">
+                <span className="flag">{place.flag}</span>
+                <span>{lang === 'es' ? place.locationEs : place.locationEn}</span>
+              </div>
+              <div className="pick-image">
+                <img src={place.image} alt={lang === 'es' ? place.nameEs : place.nameEn} draggable="false" />
+              </div>
+              <div className="pick-info">
+                <h3>{lang === 'es' ? place.nameEs : place.nameEn}</h3>
+              </div>
             </div>
-            <div className="pick-image">
-              <img src={place.image} alt={lang === 'es' ? place.nameEs : place.nameEn} />
-            </div>
-            <div className="pick-info">
-              <h3>{lang === 'es' ? place.nameEs : place.nameEn}</h3>
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
 
       <div className="carousel-controls">
