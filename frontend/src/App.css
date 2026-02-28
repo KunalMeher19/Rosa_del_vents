@@ -148,15 +148,17 @@ img {
   z-index: 1000;
   transition: all 0.5s var(--transition-smooth);
   background: transparent;
-  will-change: background, padding;
+  will-change: background, padding, transform;
+  transition: transform 0.4s ease, background 0.4s ease, padding 0.4s ease, backdrop-filter 0.4s ease;
 }
 
 .main-nav.scrolled {
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: rgba(0, 0, 0, 0.0);
   padding: 1rem 3rem;
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
+}
+
+.main-nav.nav-hidden {
+  transform: translateY(-100%);
 }
 
 .logo {
@@ -308,11 +310,12 @@ img {
   width: 45%;
   max-width: 500px;
   height: 100vh;
-  background: var(--color-bg-dark);
+  background: #1e1e1e;
+  /* Dark theme to match design */
   z-index: 1001;
   display: flex;
   flex-direction: column;
-  padding: 1.5rem;
+  padding: 2.5rem;
   will-change: transform;
 }
 
@@ -322,8 +325,8 @@ img {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(5px);
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(4px);
   z-index: 1000;
   will-change: opacity;
 }

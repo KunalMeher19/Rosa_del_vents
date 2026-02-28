@@ -10,10 +10,27 @@ const Navigation = ({ menuOpen, setMenuOpen }) => {
     const overlayRef = useRef(null);
     const linksRef = useRef([]);
     const [scrolled, setScrolled] = useState(false);
+    const [hidden, setHidden] = useState(false);
+    const lastScrollY = useRef(0);
     const { lang, setLang, t } = useLang();
 
     useEffect(() => {
-        const handleScroll = () => setScrolled(window.scrollY > 80);
+        const handleScroll = () => {
+            const currentScrollY = window.scrollY;
+
+            // Determine if passed hero
+            setScrolled(currentScrollY > 80);
+
+            // Determine scroll direction to hide/show
+            if (currentScrollY > lastScrollY.current && currentScrollY > 200) {
+                setHidden(true);
+            } else if (currentScrollY < lastScrollY.current) {
+                setHidden(false);
+            }
+
+            lastScrollY.current = currentScrollY;
+        };
+
         window.addEventListener('scroll', handleScroll, { passive: true });
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
@@ -33,13 +50,6 @@ const Navigation = ({ menuOpen, setMenuOpen }) => {
         }
     }, [menuOpen]);
 
-    useLayoutEffect(() => {
-        gsap.fromTo(navRef.current,
-            { y: -15, opacity: 0 },
-            { y: 0, opacity: 1, duration: 0.6, delay: 0.2, ease: 'power2.out' }
-        );
-    }, []);
-
     const menuItems = [
         { label: t.nav_rooms, href: '#habitaciones' },
         { label: t.nav_gallery, href: '#galeria' },
@@ -52,7 +62,11 @@ const Navigation = ({ menuOpen, setMenuOpen }) => {
 
     return (
         <>
-            <nav ref={navRef} className={`main-nav ${scrolled ? 'scrolled' : ''}`} style={{ opacity: 0 }}>
+            <nav
+                ref={navRef}
+                className={`main-nav ${scrolled ? 'scrolled' : ''} ${hidden ? 'nav-hidden' : ''}`}
+                style={{ opacity: 0 }}
+            >
                 <div className="nav-left">
                     <a href="#hero" className="logo">
                         Rosa dels Vents

@@ -10,26 +10,32 @@ const Hero = () => {
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ delay: 0.1 });
-      tl.from('.hero-title .line', {
-        y: 60,
-        opacity: 0,
-        duration: 1.1,
-        stagger: 0.15,
-        ease: 'power3.out',
-      })
+      // Assuming loading screen takes ~3.5s to finish, delay hero entry
+      const tl = gsap.timeline({ delay: 3.8 });
+
+      tl.fromTo('.main-nav',
+        { y: 50, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1, ease: 'power3.out' }
+      )
+        .from('.hero-title .line', {
+          y: 100,
+          opacity: 0,
+          duration: 1.2,
+          stagger: 0.2,
+          ease: 'power4.out',
+        }, '-=0.5')
         .from('.hero-subtitle', {
-          y: 20,
+          y: 30,
           opacity: 0,
-          duration: 0.8,
-          ease: 'power2.out',
-        }, '-=0.6')
+          duration: 1,
+          ease: 'power3.out',
+        }, '-=0.8')
         .from('.hero-cta-group', {
-          y: 15,
+          y: 30,
           opacity: 0,
-          duration: 0.6,
-          ease: 'power2.out',
-        }, '-=0.4');
+          duration: 1,
+          ease: 'power3.out',
+        }, '-=0.8');
 
       const btn = sectionRef.current.querySelector('.hero-button');
       if (btn) {
