@@ -8,6 +8,7 @@ const ContactSection = () => {
     const sectionRef = useRef(null);
     const [formData, setFormData] = useState({ name: '', email: '', dates: '', message: '' });
     const [submitted, setSubmitted] = useState(false);
+    const [iframeLoaded, setIframeLoaded] = useState(false);
     const { t, lang } = useLang();
 
     useLayoutEffect(() => {
@@ -42,7 +43,7 @@ const ContactSection = () => {
                         <div className="contact-info-item">
                             <span className="contact-info-label">{t.contact_address_label}</span>
                             <a
-                                href="https://maps.google.com/?q=Carrer+Sant+Joan+3+El+Perello+Tarragona"
+                                href="https://www.google.com/maps/place/HOSTAL+ROSA+DELS+VENTS/@40.8730802,0.7075766,15.74z/data=!4m18!1m8!3m7!1s0x12a1197e29109ad9:0x7ea76ad0f4518a39!2sCarrer+Sant+Joan,+3,+43519+El+Perell%C3%B3,+Tarragona,+Spain!3b1!8m2!3d40.8758689!4d0.7124785!16s%2Fg%2F11cpbnsv3d!3m8!1s0x12a1197e2f667c19:0xfa1ce0a41ebf23c6!5m2!4m1!1i2!8m2!3d40.8758098!4d0.7125935!16s%2Fg%2F11c80cq9l_?hl=en&entry=ttu&g_ep=EgoyMDI2MDIyNS4wIKXMDSoASAFQAw%3D%3D"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="contact-info-value"
@@ -74,16 +75,24 @@ const ContactSection = () => {
                     </div>
 
                     {/* Embedded map via iframe */}
-                    <div className="contact-map">
+                    <div className="contact-map" style={{ position: 'relative', minHeight: '220px', borderRadius: '8px', overflow: 'hidden' }}>
+                        {!iframeLoaded && (
+                            <div className="contact-map-skeleton" style={{
+                                position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
+                                backgroundColor: '#e2ddd1',
+                                animation: 'pulse 1.5s infinite ease-in-out'
+                            }}></div>
+                        )}
                         <iframe
                             title="Rosa dels Vents Map"
-                            src="https://maps.google.com/maps?width=100%25&height=600&hl=en&q=Carrer%20Sant%20Joan,%203,%20El%20Perell%C3%B3+(Rosa%20dels%20Vents)&t=&z=16&ie=UTF8&iwloc=B&output=embed"
+                            src="https://maps.google.com/maps?width=100%25&height=600&hl=en&q=HOSTAL%20ROSA%20DELS%20VENTS,%20Carrer%20Sant%20Joan,%203,%20El%20Perell%C3%B3+(Rosa%20dels%20Vents)&t=&z=16&ie=UTF8&iwloc=B&output=embed"
                             width="100%"
                             height="220"
-                            style={{ border: 0, borderRadius: '8px' }}
+                            style={{ border: 0, borderRadius: '8px', opacity: iframeLoaded ? 1 : 0, transition: 'opacity 0.5s ease' }}
                             allowFullScreen=""
                             loading="lazy"
                             referrerPolicy="no-referrer-when-downgrade"
+                            onLoad={() => setIframeLoaded(true)}
                         />
                     </div>
                 </div>

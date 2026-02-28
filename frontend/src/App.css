@@ -796,6 +796,7 @@ img {
 .explore-button.light {
   color: var(--color-text-light);
   border-color: var(--color-text-light);
+  background: transparent;
 }
 
 .explore-button.light:hover {
@@ -983,6 +984,25 @@ img {
 .table-row.dark:hover .occupation-tag {
   border-color: #fff;
   color: #fff;
+}
+
+.table-row.dark .hotel-name,
+.table-row.dark .person-name {
+  color: var(--color-text-light);
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.6;
+  }
+
+  50% {
+    opacity: 0.8;
+  }
+
+  100% {
+    opacity: 0.6;
+  }
 }
 
 /* Floating preview images */
