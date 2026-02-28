@@ -410,21 +410,58 @@ img {
 .menu-links a {
   display: block;
   font-family: var(--font-serif);
-  font-size: 2.8rem;
+  font-size: clamp(2.5rem, 6vw, 3.5rem);
   font-weight: 300;
-  color: var(--color-text-light);
+  color: #777;
   padding: 0.25rem 0;
   transition: color 0.3s ease, transform 0.3s ease;
   will-change: transform;
+  text-decoration: none;
+  position: relative;
+  line-height: 1.1;
+}
+
+.menu-links li:first-child a {
+  color: #fff;
+}
+
+.menu-links li:first-child a::before {
+  opacity: 1;
+}
+
+.menu-links a::before {
+  content: '•';
+  position: absolute;
+  left: -1.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0;
+  color: #fff;
+  font-size: 0.45em;
+  transition: opacity 0.3s ease;
 }
 
 .menu-links a:hover {
-  color: var(--color-accent);
-  transform: translateX(10px);
+  color: #fff;
+  transform: translateX(1.5rem);
+}
+
+.menu-links a:hover::before {
+  opacity: 1;
+}
+
+/* Gold distinct item at bottom */
+.menu-links li:last-child a {
+  color: #8c734b;
+  margin-top: 0.5rem;
+}
+
+.menu-links li:last-child a:hover {
+  color: #a88b5d;
 }
 
 .menu-links a.highlight {
-  color: var(--color-accent);
+  color: #8c734b;
 }
 
 .menu-footer {

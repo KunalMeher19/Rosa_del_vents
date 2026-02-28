@@ -13,17 +13,13 @@ const Hero = () => {
       // Assuming loading screen takes ~3.5s to finish, delay hero entry
       const tl = gsap.timeline({ delay: 3.8 });
 
-      tl.fromTo('.main-nav',
-        { y: 50, opacity: 0 },
-        { y: 0, opacity: 1, duration: 1, ease: 'power3.out' }
-      )
-        .from('.hero-title .line', {
-          y: 100,
-          opacity: 0,
-          duration: 1.2,
-          stagger: 0.2,
-          ease: 'power4.out',
-        }, '-=0.5')
+      tl.from('.hero-title .line', {
+        y: 100,
+        opacity: 0,
+        duration: 1.2,
+        stagger: 0.2,
+        ease: 'power4.out',
+      })
         .from('.hero-subtitle', {
           y: 30,
           opacity: 0,

@@ -36,12 +36,23 @@ const Navigation = ({ menuOpen, setMenuOpen }) => {
     }, []);
 
     useLayoutEffect(() => {
+        gsap.fromTo(navRef.current,
+            { y: 40, opacity: 0 },
+            { y: 0, opacity: 1, duration: 1, delay: 1, ease: 'fade-in' }
+        );
+    }, []);
+
+    useLayoutEffect(() => {
         if (menuOpen) {
             const tl = gsap.timeline();
             document.body.style.overflow = 'hidden';
             tl.to(overlayRef.current, { opacity: 1, duration: 0.3, ease: 'power2.out', pointerEvents: 'auto' })
                 .to(menuRef.current, { x: 0, duration: 0.5, ease: 'power3.out' }, '-=0.2')
-                .from(linksRef.current, { x: 50, opacity: 0, duration: 0.4, stagger: 0.08, ease: 'power2.out' }, '-=0.3');
+                .fromTo(linksRef.current,
+                    { x: 50, opacity: 0 },
+                    { x: 0, opacity: 1, duration: 0.4, stagger: 0.08, ease: 'power2.out' },
+                    '-=0.3'
+                );
         } else {
             const tl = gsap.timeline({ onComplete: () => { document.body.style.overflow = ''; } });
             tl.to(linksRef.current, { x: 30, opacity: 0, duration: 0.3, stagger: 0.05, ease: 'power2.in' })
