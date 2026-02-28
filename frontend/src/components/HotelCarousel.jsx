@@ -1,6 +1,6 @@
 import React, { useRef, useLayoutEffect, useState } from 'react';
 import { gsap } from 'gsap';
-import { Draggable } from 'gsap/Draggable';
+import { Draggable } from 'gsap/all';
 import { useLang } from '../context/LanguageContext';
 
 gsap.registerPlugin(Draggable);
