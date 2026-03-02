@@ -2,6 +2,7 @@ import React, { useRef, useLayoutEffect } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useLang } from '../context/LanguageContext';
+import './LocationSpotlight.css';
 
 gsap.registerPlugin(ScrollTrigger);
 

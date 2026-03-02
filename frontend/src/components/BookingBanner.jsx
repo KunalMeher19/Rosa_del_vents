@@ -1,6 +1,7 @@
 import React, { useRef, useLayoutEffect } from 'react';
 import { gsap } from 'gsap';
 import { useLang } from '../context/LanguageContext';
+import './BookingBanner.css';
 
 const BOOKING_URL = 'https://www.booking.com/hotel/es/hostal-rosa-dels-vents.es.html';
 

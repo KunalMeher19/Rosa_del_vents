@@ -2,6 +2,7 @@ import React, { useRef, useLayoutEffect, useState } from 'react';
 import { gsap } from 'gsap';
 import { Draggable, ScrollTrigger } from 'gsap/all';
 import { useLang } from '../context/LanguageContext';
+import './HotelCarousel.css';
 
 gsap.registerPlugin(Draggable, ScrollTrigger);
 

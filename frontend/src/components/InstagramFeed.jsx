@@ -2,6 +2,7 @@ import React, { useRef, useLayoutEffect, useState, useEffect } from 'react';
 import { gsap } from 'gsap';
 import { useLang } from '../context/LanguageContext';
 import Masonry from './Masonry';
+import './InstagramFeed.css';
 
 // Map existing images to the structure required by the Masonry component
 const galleryImages = [

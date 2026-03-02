@@ -2,6 +2,7 @@ import React, { useRef, useLayoutEffect } from 'react';
 import { gsap } from 'gsap';
 import { Draggable } from 'gsap/all';
 import { useLang } from '../context/LanguageContext';
+import './EditorsPicks.css';
 
 gsap.registerPlugin(Draggable);
 

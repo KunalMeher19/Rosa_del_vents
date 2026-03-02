@@ -1,0 +1,37 @@
+/* PeopleSection Component Styles */
+
+.people-section {
+    padding: 6rem 3rem;
+    background: var(--color-bg-dark);
+}
+
+.people-table {
+    width: 100%;
+}
+
+.col-occupation {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 0.6;
+    }
+
+    50% {
+        opacity: 0.8;
+    }
+
+    100% {
+        opacity: 0.6;
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .people-section {
+        padding: 4rem 1.5rem;
+    }
+}

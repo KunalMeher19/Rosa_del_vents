@@ -2,6 +2,7 @@ import React, { useRef, useLayoutEffect } from 'react';
 import { gsap } from 'gsap';
 import { useLang } from '../context/LanguageContext';
 import FlowingMenu from './FlowingMenu';
+import './PeopleSection.css';
 
 const aboutImages = [
   'https://images.unsplash.com/photo-1506197603052-3cc9c3a201bd?w=600&q=80',
