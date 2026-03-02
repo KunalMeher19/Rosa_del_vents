@@ -25,11 +25,11 @@ const PeopleSection = () => {
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       gsap.from('.people-section .section-header', {
-        scrollTrigger: { trigger: sectionRef.current, start: 'top 80%', toggleActions: 'play none none reverse' },
+        scrollTrigger: { trigger: sectionRef.current, start: 'top 80%', toggleActions: 'play none none none' },
         y: 40, opacity: 0, duration: 0.8, ease: 'power2.out'
       });
       gsap.from('.flowing-menu-container', {
-        scrollTrigger: { trigger: sectionRef.current, start: 'top 60%', toggleActions: 'play none none reverse' },
+        scrollTrigger: { trigger: sectionRef.current, start: 'top 60%', toggleActions: 'play none none none' },
         y: 40, opacity: 0, duration: 0.8, delay: 0.2, ease: 'power2.out'
       });
     }, sectionRef);

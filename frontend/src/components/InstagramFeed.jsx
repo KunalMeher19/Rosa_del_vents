@@ -45,12 +45,12 @@ const InstagramFeed = () => {
     const ctx = gsap.context(() => {
       // Animate the title and button independently
       gsap.from('.instagram-section-title', {
-        scrollTrigger: { trigger: sectionRef.current, start: 'top 80%', toggleActions: 'play none none reverse' },
+        scrollTrigger: { trigger: sectionRef.current, start: 'top 80%', toggleActions: 'play none none none' },
         y: 30, opacity: 0, duration: 0.7, ease: 'power2.out'
       });
 
       gsap.from('.instagram-cta', {
-        scrollTrigger: { trigger: sectionRef.current, start: 'top 80%', toggleActions: 'play none none reverse' },
+        scrollTrigger: { trigger: sectionRef.current, start: 'top 80%', toggleActions: 'play none none none' },
         y: 30, opacity: 0, duration: 0.7, delay: 0.3, ease: 'power2.out'
       });
     }, sectionRef);

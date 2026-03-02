@@ -12,11 +12,11 @@ const Footer = () => {
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       gsap.from('.footer-section', {
-        scrollTrigger: { trigger: footerRef.current, start: 'top 85%', toggleActions: 'play none none reverse' },
+        scrollTrigger: { trigger: footerRef.current, start: 'top 85%', toggleActions: 'play none none none' },
         y: 50, opacity: 0, duration: 0.8, stagger: 0.2, ease: 'power2.out'
       });
       gsap.from('.footer-col', {
-        scrollTrigger: { trigger: '.footer-bottom', start: 'top 90%', toggleActions: 'play none none reverse' },
+        scrollTrigger: { trigger: '.footer-bottom', start: 'top 90%', toggleActions: 'play none none none' },
         y: 20, opacity: 0, duration: 0.6, stagger: 0.05, ease: 'power2.out'
       });
     }, footerRef);

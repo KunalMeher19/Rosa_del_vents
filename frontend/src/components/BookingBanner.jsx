@@ -15,7 +15,7 @@ const BookingBanner = () => {
                 scrollTrigger: {
                     trigger: bannerRef.current,
                     start: 'top 85%',
-                    toggleActions: 'play none none reverse',
+                    toggleActions: 'play none none none',
                 },
                 y: 30,
                 opacity: 0,

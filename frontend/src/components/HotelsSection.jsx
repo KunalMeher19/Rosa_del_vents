@@ -60,11 +60,11 @@ const HotelsSection = () => {
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       gsap.from('.hotels-section .section-header', {
-        scrollTrigger: { trigger: sectionRef.current, start: 'top 80%', toggleActions: 'play none none reverse' },
+        scrollTrigger: { trigger: sectionRef.current, start: 'top 80%', toggleActions: 'play none none none' },
         y: 40, opacity: 0, duration: 0.8, ease: 'power2.out'
       });
       gsap.from('.table-row', {
-        scrollTrigger: { trigger: '.hotels-table', start: 'top 80%', toggleActions: 'play none none reverse' },
+        scrollTrigger: { trigger: '.hotels-table', start: 'top 80%', toggleActions: 'play none none none' },
         y: 30, opacity: 0, duration: 0.6, stagger: 0.1, ease: 'power2.out'
       });
     }, sectionRef);
