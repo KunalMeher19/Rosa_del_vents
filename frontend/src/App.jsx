@@ -4,7 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
 import './App.css';
 
-import { LanguageProvider } from './context/LanguageContext';
+import { LanguageProvider, useLang } from './context/LanguageContext';
 import LoadingScreen from './components/LoadingScreen';
 import Navigation from './components/Navigation';
 import Hero from './components/Hero';
@@ -109,6 +109,19 @@ function AppInner() {
       return () => clearTimeout(t);
     }
   }, [loading]);
+
+  const { lang } = useLang();
+
+  // Refresh GSAP ScrollTriggers when language changes (page height may change)
+  useEffect(() => {
+    if (!loading) {
+      // Small delay to let React render the new language strings
+      const t = setTimeout(() => {
+        ScrollTrigger.refresh();
+      }, 100);
+      return () => clearTimeout(t);
+    }
+  }, [lang, loading]);
 
   return (
     <div className="App">
