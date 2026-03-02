@@ -46,13 +46,13 @@ const LocationSpotlight = () => {
 
   return (
     <section id="ubicacion" className="location-spotlight reveal-section dark-theme" ref={sectionRef}>
-      <div className="spotlight-background" ref={bgRef}>
+      {/* <div className="spotlight-background" ref={bgRef}>
         <img
           src="https://images.unsplash.com/photo-1566218246241-934ae4d9e40a?w=1600&q=80"
           alt="El Perelló, Costa Daurada"
         />
         <div className="spotlight-overlay"></div>
-      </div>
+      </div> */}
 
       <div className="floating-images">
         <div className="float-img float-img-1" ref={floatImg1Ref}>

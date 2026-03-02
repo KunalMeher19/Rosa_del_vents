@@ -120,9 +120,9 @@ function AppInner() {
 
       <main className={`main-content${!loading ? ' visible' : ''}`}>
         <Hero />
-        <BookingBanner />
         <HotelCarousel />
         <HotelsSection />
+        <BookingBanner />
         <LocationSpotlight />
         <EditorsPicks />
         <PeopleSection />

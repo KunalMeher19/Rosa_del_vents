@@ -7,7 +7,7 @@
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    background: #0a0a0a;
+    background: var(--color-bg-dark);
 }
 
 .spotlight-background {

@@ -183,13 +183,13 @@ const HotelCarousel = () => {
   return (
     <section id="habitaciones" className="hotel-carousel-section">
       <div className="carousel-section-header">
-        <div>
+        {/* <div>
           <h2 className="section-title">{t.rooms_title}<sup>(0{rooms.length})</sup></h2>
           <p className="carousel-subtitle">{t.rooms_subtitle}</p>
-        </div>
-        <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="explore-button magnetic">
+        </div> */}
+        {/* <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="explore-button magnetic">
           {t.rooms_explore}
-        </a>
+        </a> */}
       </div>
 
       <div className="hotel-carousel" ref={wrapperRef}>
