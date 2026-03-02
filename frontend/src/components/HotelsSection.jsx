@@ -1,4 +1,4 @@
-import React, { useRef, useLayoutEffect, useState } from 'react';
+import React, { useRef, useLayoutEffect } from 'react';
 import { gsap } from 'gsap';
 import { useLang } from '../context/LanguageContext';
 
@@ -13,7 +13,6 @@ const amenitiesData = [
     capacityEn: '2 people',
     featuresEs: ['BAÑO PRIVADO', 'AIRE ACONDICIONADO', 'WIFI'],
     featuresEn: ['PRIVATE BATHROOM', 'AIR CONDITIONING', 'WIFI'],
-    image: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=200&q=80'
   },
   {
     id: 2,
@@ -23,7 +22,6 @@ const amenitiesData = [
     capacityEn: '1 person',
     featuresEs: ['BAÑO COMPARTIDO', 'AIRE ACONDICIONADO', 'WIFI'],
     featuresEn: ['SHARED BATHROOM', 'AIR CONDITIONING', 'WIFI'],
-    image: 'https://images.unsplash.com/photo-1586105251261-72a756497a11?w=200&q=80'
   },
   {
     id: 3,
@@ -33,7 +31,6 @@ const amenitiesData = [
     capacityEn: '3 people',
     featuresEs: ['BAÑO PRIVADO', 'AIRE ACONDICIONADO', 'WIFI'],
     featuresEn: ['PRIVATE BATHROOM', 'AIR CONDITIONING', 'WIFI'],
-    image: 'https://images.unsplash.com/photo-1540518614846-7eded433c457?w=200&q=80'
   },
   {
     id: 4,
@@ -43,7 +40,6 @@ const amenitiesData = [
     capacityEn: '4 people',
     featuresEs: ['BAÑO PRIVADO', 'AIRE ACONDICIONADO', 'WIFI'],
     featuresEn: ['PRIVATE BATHROOM', 'AIR CONDITIONING', 'WIFI'],
-    image: 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?w=200&q=80'
   },
   {
     id: 5,
@@ -53,14 +49,11 @@ const amenitiesData = [
     capacityEn: '2 people',
     featuresEs: ['TERRAZA PRIVADA', 'BAÑO PRIVADO', 'WIFI'],
     featuresEn: ['PRIVATE TERRACE', 'PRIVATE BATHROOM', 'WIFI'],
-    image: 'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=200&q=80'
   }
 ];
 
 const HotelsSection = () => {
   const sectionRef = useRef(null);
-  const [hoveredId, setHoveredId] = useState(null);
-  const imageRef = useRef(null);
   const { t, lang } = useLang();
 
   useLayoutEffect(() => {
@@ -76,32 +69,6 @@ const HotelsSection = () => {
     }, sectionRef);
     return () => ctx.revert();
   }, []);
-
-  const handleMouseEnter = (id, e) => {
-    setHoveredId(id);
-    if (imageRef.current) {
-      gsap.killTweensOf(imageRef.current);
-      gsap.fromTo(imageRef.current,
-        { opacity: 0, scale: 0.8, x: e.clientX - 100, y: e.clientY - 75 },
-        { opacity: 1, scale: 1, duration: 0.3, ease: 'power2.out' }
-      );
-    }
-  };
-
-  const handleMouseMove = (e) => {
-    if (imageRef.current && hoveredId) {
-      gsap.to(imageRef.current, { x: e.clientX - 100, y: e.clientY - 75, duration: 0.3, ease: 'power2.out' });
-    }
-  };
-
-  const handleMouseLeave = () => {
-    setHoveredId(null);
-    if (imageRef.current) {
-      gsap.to(imageRef.current, { opacity: 0, scale: 0.8, duration: 0.2, ease: 'power2.in' });
-    }
-  };
-
-  const hoveredRoom = amenitiesData.find(r => r.id === hoveredId);
 
   return (
     <section className="hotels-section reveal-section" ref={sectionRef}>
@@ -122,12 +89,12 @@ const HotelsSection = () => {
         </div>
 
         {amenitiesData.map((room) => (
-          <div
+          <a
             key={room.id}
+            href={BOOKING_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             className="table-row"
-            onMouseEnter={(e) => handleMouseEnter(room.id, e)}
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
           >
             <div className="col-name">
               <span className="hotel-name">{lang === 'es' ? room.nameEs : room.nameEn}</span>
@@ -140,13 +107,8 @@ const HotelsSection = () => {
                 <span key={i} className="fact-tag">{f}</span>
               ))}
             </div>
-          </div>
+          </a>
         ))}
-      </div>
-
-      {/* Hover preview image */}
-      <div ref={imageRef} className="floating-preview" style={{ position: 'fixed', pointerEvents: 'none', zIndex: 100, opacity: 0, width: '200px', height: '150px', borderRadius: '8px', overflow: 'hidden', boxShadow: '0 20px 60px rgba(0,0,0,0.3)' }}>
-        {hoveredRoom && <img src={hoveredRoom.image} alt={hoveredRoom.nameEs} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />}
       </div>
     </section>
   );
