@@ -1,5 +1,6 @@
 import React, { useRef, useLayoutEffect } from 'react';
 import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useLang } from '../context/LanguageContext';
 import './Footer.css';
 
@@ -11,17 +12,30 @@ const Footer = () => {
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
+      // Animate the whole footer into view (parent entry)
+      gsap.from(footerRef.current, {
+        scrollTrigger: { trigger: footerRef.current, start: 'top 90%', toggleActions: 'play none none none' },
+        y: 40, opacity: 0, duration: 0.9, ease: 'power3.out'
+      });
+      // Staggered children animations
       gsap.from('.footer-section', {
         scrollTrigger: { trigger: footerRef.current, start: 'top 85%', toggleActions: 'play none none none' },
         y: 50, opacity: 0, duration: 0.8, stagger: 0.2, ease: 'power2.out'
       });
       gsap.from('.footer-col', {
-        scrollTrigger: { trigger: '.footer-bottom', start: 'top 90%', toggleActions: 'play none none none' },
+        scrollTrigger: { trigger: '.footer-bottom', start: 'top 92%', toggleActions: 'play none none none' },
         y: 20, opacity: 0, duration: 0.6, stagger: 0.05, ease: 'power2.out'
       });
     }, footerRef);
-    return () => ctx.revert();
-  }, []);
+
+    // Recalculate trigger positions after the new layout settles
+    const refreshTimer = setTimeout(() => ScrollTrigger.refresh(), 150);
+
+    return () => {
+      ctx.revert();
+      clearTimeout(refreshTimer);
+    };
+  }, [lang]);
 
   const handleMagneticMove = (e) => {
     const btn = e.currentTarget;
@@ -33,7 +47,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="main-footer reveal-section dark-theme" ref={footerRef}>
+    <footer className="main-footer dark-theme" ref={footerRef}>
       <div className="footer-top">
         <div className="footer-section">
           <h3 className="footer-title">{lang === 'es' ? '¿Tienes alguna pregunta?' : 'Have a question?'}</h3>
