@@ -6,7 +6,7 @@ import './HotelCarousel.css';
 
 gsap.registerPlugin(Draggable, ScrollTrigger);
 
-const BOOKING_URL = 'https://www.booking.com/hotel/es/hostal-rosa-dels-vents.es.html';
+/* const BOOKING_URL = 'https://www.booking.com/hotel/es/hostal-rosa-dels-vents.es.html'; */
 
 // Placeholder room data — update with real photos and prices
 const rooms = [
