@@ -2,7 +2,7 @@
 
 .hotels-section {
     padding: 6rem 3rem;
-    background: var(--color-bg);
+    background: transparent;
 }
 
 .section-header {

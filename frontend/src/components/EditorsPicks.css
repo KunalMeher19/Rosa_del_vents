@@ -2,7 +2,7 @@
 
 .editors-picks {
     padding: 6rem 3rem;
-    background: var(--color-bg-light);
+    background: transparent;
 }
 
 .picks-carousel-wrapper {
