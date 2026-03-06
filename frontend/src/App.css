@@ -105,22 +105,17 @@ img {
   will-change: transform, opacity;
 }
 
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
+/* Hide scrollbar — scroll still works */
+* {
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE/Edge */
 }
 
-::-webkit-scrollbar-track {
-  background: var(--color-bg);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--color-border);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-text-muted);
+*::-webkit-scrollbar {
+  display: none;
+  /* Chrome/Safari */
 }
 
 /* Focus Styles for Accessibility */

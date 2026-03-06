@@ -22,7 +22,7 @@ const nearbyData = [
     nameEn: 'Ebro Delta',
     locationEs: 'A 20 minutos',
     locationEn: '20 minutes away',
-    image: 'https://images.unsplash.com/photo-1444464666168-49d633b86797?w=600&q=80',
+    image: 'https://images.unsplash.com/photo-1470770903676-69b98201ea1c?w=600&q=80',
     flag: '🦩'
   },
   {
@@ -31,7 +31,7 @@ const nearbyData = [
     nameEn: 'Poblet & Siurana',
     locationEs: 'A 45 minutos',
     locationEn: '45 minutes away',
-    image: 'https://images.unsplash.com/photo-1539657306720-97551006ead3?w=600&q=80',
+    image: 'https://images.unsplash.com/photo-1555881400-74d7acaacd8b?w=600&q=80',
     flag: '🏛️'
   },
   {
@@ -40,7 +40,7 @@ const nearbyData = [
     nameEn: 'Roman Tarragona',
     locationEs: 'A 30 minutos',
     locationEn: '30 minutes away',
-    image: 'https://images.unsplash.com/photo-1534698489373-ec4ce22e8b42?w=600&q=80',
+    image: 'https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=600&q=80',
     flag: '🏛️'
   },
   {
@@ -49,7 +49,7 @@ const nearbyData = [
     nameEn: 'Wine Route',
     locationEs: 'Priorat · 40 min',
     locationEn: 'Priorat · 40 min',
-    image: 'https://images.unsplash.com/photo-1474722883778-792e2be21c75?w=600&q=80',
+    image: 'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=600&q=80',
     flag: '🍷'
   }
 ];

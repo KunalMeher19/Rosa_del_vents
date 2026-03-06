@@ -8,12 +8,12 @@ import './InstagramFeed.css';
 const galleryImages = [
   { id: "1", img: "https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?w=800&q=80", url: "https://images.unsplash.com/photo-1499793983690-e29da59ef1c2", height: 500 },
   { id: "2", img: "https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?w=800&q=80", url: "https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd", height: 700 },
-  { id: "3", img: "https://images.unsplash.com/photo-1542314831-c6a4d14d8c53?w=800&q=80", url: "https://images.unsplash.com/photo-1542314831-c6a4d14d8c53", height: 450 },
+  { id: "3", img: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80", url: "https://images.unsplash.com/photo-1566073771259-6a8506099945", height: 450 },
   { id: "4", img: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&q=80", url: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267", height: 800 },
   { id: "5", img: "https://images.unsplash.com/photo-1560624052-449f5ddf0c31?w=800&q=80", url: "https://images.unsplash.com/photo-1560624052-449f5ddf0c31", height: 550 },
   { id: "6", img: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&q=80", url: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b", height: 400 },
   { id: "7", img: "https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=800&q=80", url: "https://images.unsplash.com/photo-1505691938895-1758d7feb511", height: 600 },
-  { id: "8", img: "https://images.unsplash.com/photo-1512684820680-779cb45258e7?w=800&q=80", url: "https://images.unsplash.com/photo-1512684820680-779cb45258e7", height: 500 },
+  { id: "8", img: "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&q=80", url: "https://images.unsplash.com/photo-1631049307264-da0ec9d70304", height: 500 },
 ];
 
 const InstagramFeed = () => {
