@@ -78,7 +78,7 @@ const InstagramFeed = () => {
       </div>
 
       <div className="instagram-cta" style={{ textAlign: 'center', marginTop: '4rem' }}>
-        <a href="#contacto" className="insta-button magnetic-light">{t.gallery_button}</a>
+        <a href="#contacto" className="insta-button"><span>{t.gallery_button}</span></a>
       </div>
     </section>
   );

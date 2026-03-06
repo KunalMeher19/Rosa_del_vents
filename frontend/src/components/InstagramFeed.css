@@ -46,20 +46,45 @@
     padding: 1rem 2.5rem;
     background: var(--color-text-light);
     color: var(--color-text);
+    border: 1px solid var(--color-text-light);
     border-radius: 100px;
     font-size: 0.8rem;
     font-weight: 500;
     letter-spacing: 0.02em;
-    transition: all 0.4s var(--transition-smooth);
     white-space: nowrap;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+    transition: color 0.4s var(--transition-smooth), border-color 0.4s var(--transition-smooth),
+        transform 0.35s ease, box-shadow 0.35s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Gold fill — wipes up from below on hover */
+.insta-button::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--color-accent);
+    transform: translateY(100%);
+    transition: transform 0.4s var(--transition-smooth);
+    z-index: 0;
+}
+
+/* Text sits above fill */
+.insta-button span {
+    position: relative;
+    z-index: 1;
 }
 
 .insta-button:hover {
+    color: var(--color-text-light);
+    border-color: var(--color-accent);
     transform: translateY(-3px);
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-    background: var(--color-accent);
-    color: var(--color-text-light);
+}
+
+.insta-button:hover::before {
+    transform: translateY(0);
 }
 
 /* Gallery title fix */

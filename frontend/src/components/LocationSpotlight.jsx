@@ -6,7 +6,7 @@ import './LocationSpotlight.css';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const MAPS_URL = 'https://maps.google.com/?q=Carrer+Sant+Joan+3+El+Perello+Tarragona+Spain';
+const MAPS_URL = 'https://www.booking.com/hotel/es/hostal-rosa-dels-vents.es.html';
 
 const LocationSpotlight = () => {
   const sectionRef = useRef(null);
@@ -67,8 +67,8 @@ const LocationSpotlight = () => {
         <span className="spotlight-label">{t.location_label}</span>
         <h2 className="spotlight-title">{t.location_title}</h2>
         <p className="spotlight-subtitle">{t.location_subtitle}</p>
-        <a href={MAPS_URL} target="_blank" rel="noopener noreferrer" className="spotlight-button magnetic-light">
-          {t.location_button}
+        <a href={MAPS_URL} target="_blank" rel="noopener noreferrer" className="spotlight-button">
+          <span>{t.location_button}</span>
         </a>
       </div>
     </section>
