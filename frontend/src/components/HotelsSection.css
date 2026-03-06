@@ -103,8 +103,8 @@
     grid-template-columns: 2.5fr 1.5fr 3.5fr;
     gap: 1.5rem;
     padding: 1rem 0;
-    border-top: 1px solid var(--color-border);
-    border-bottom: 1px solid var(--color-border);
+    border-top: 1px solid var(--color-text);
+    border-bottom: 1px solid var(--color-text);
     font-size: 0.6rem;
     letter-spacing: 0.12em;
     color: var(--color-text-muted);
@@ -124,7 +124,7 @@
     grid-template-columns: 2.5fr 1.5fr 3.5fr;
     gap: 1.5rem;
     padding: 2.2rem 0;
-    border-bottom: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-text);
     align-items: center;
     position: relative;
     text-decoration: none;

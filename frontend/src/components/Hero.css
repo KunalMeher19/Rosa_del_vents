@@ -9,24 +9,32 @@
     padding: 6rem 2rem 4rem;
     background: transparent;
     position: relative;
-    overflow: hidden;
+    overflow: visible;
 }
 
-/* Grainient WebGL full-bleed background */
+
+/* Grainient WebGL — bleeds slightly below hero with a fade-out mask */
 .hero-bg {
     position: absolute;
-    inset: 0;
-    z-index: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: -50px;
+    z-index: 2;
     width: 100%;
-    height: 100%;
+    height: calc(100% + 90px);
+    /* Fade the canvas: fully opaque through the hero, dissolves in the last ~150px */
+    -webkit-mask-image: linear-gradient(to bottom, black 0%, black calc(100% - 90px), transparent 100%);
+    mask-image: linear-gradient(to bottom, black 0%, black calc(100% - 90px), transparent 100%);
 }
+
 
 /* Radial vignette so text pops on the animated gradient */
 .hero-overlay {
     position: absolute;
     inset: 0;
     z-index: 1;
-    background: radial-gradient(ellipse 80% 70% at 50% 50%,
+    background: radial-gradient(ellipse 80% 90% at 50% 50%,
             transparent 30%,
             rgba(34, 32, 31, 0.22) 100%);
     pointer-events: none;

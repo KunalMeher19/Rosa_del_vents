@@ -183,9 +183,6 @@ const HotelCarousel = () => {
   return (
     <section id="habitaciones" className="hotel-carousel-section">
 
-      {/* CSS gradient bridge — echoes hero colours, fades into this section */}
-      <div className="carousel-fade-bridge" />
-
       <div className="carousel-section-header">
         {/* <div>
           <h2 className="section-title">{t.rooms_title}<sup>(0{rooms.length})</sup></h2>
