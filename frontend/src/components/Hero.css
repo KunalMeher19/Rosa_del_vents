@@ -7,15 +7,36 @@
     align-items: center;
     justify-content: center;
     padding: 6rem 2rem 4rem;
-    background: var(--color-bg);
+    background: transparent;
     position: relative;
     overflow: hidden;
+}
+
+/* Grainient WebGL full-bleed background */
+.hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* Radial vignette so text pops on the animated gradient */
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: radial-gradient(ellipse 80% 70% at 50% 50%,
+            transparent 30%,
+            rgba(34, 32, 31, 0.22) 100%);
+    pointer-events: none;
 }
 
 .hero-content {
     text-align: center;
     max-width: 900px;
-    z-index: 1;
+    z-index: 2;
+    position: relative;
 }
 
 .hero-title {
@@ -24,8 +45,9 @@
     font-weight: 300;
     line-height: 1.05;
     margin-bottom: 1.5rem;
-    color: var(--color-text);
+    color: var(--color-bg-dark);
     overflow: hidden;
+    text-shadow: 0 2px 20px rgba(248, 247, 244, 0.5);
 }
 
 .hero-title .line {
@@ -36,7 +58,7 @@
 .hero-subtitle {
     font-size: 0.7rem;
     letter-spacing: 0.2em;
-    color: var(--color-text-muted);
+    color: #5a4f3f;
     margin-bottom: 2.5rem;
     font-weight: 400;
     text-transform: uppercase;

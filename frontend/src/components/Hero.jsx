@@ -1,6 +1,7 @@
 import React, { useRef, useLayoutEffect } from 'react';
 import { gsap } from 'gsap';
 import { useLang } from '../context/LanguageContext';
+import Grainient from './Grainient';
 import './Hero.css';
 
 const BOOKING_URL = 'https://www.booking.com/hotel/es/hostal-rosa-dels-vents.es.html';
@@ -46,6 +47,37 @@ const Hero = () => {
   return (
     <section className="hero" ref={sectionRef}>
 
+      {/* Grainient animated WebGL background */}
+      <div className="hero-bg">
+        <Grainient
+          color1="#EDE8DC"
+          color2="#C9A962"
+          color3="#A08B6E"
+          timeSpeed={0.28}
+          colorBalance={0.05}
+          warpStrength={1.2}
+          warpFrequency={4.0}
+          warpSpeed={1.8}
+          warpAmplitude={60.0}
+          blendAngle={15.0}
+          blendSoftness={0.08}
+          rotationAmount={380.0}
+          noiseScale={1.8}
+          grainAmount={0.06}
+          grainScale={2.5}
+          grainAnimated={false}
+          contrast={1.25}
+          gamma={1.1}
+          saturation={0.85}
+          centerX={0}
+          centerY={0}
+          zoom={0.95}
+        />
+      </div>
+
+      {/* Subtle vignette overlay for text readability */}
+      <div className="hero-overlay" />
+
       <div className="hero-content">
         <h1 className="hero-title">
           <span className="line">{t.hero_title_1}</span>
@@ -60,9 +92,6 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* <div className="hero-scroll-indicator">
-        <div className="scroll-line"></div>
-      </div> */}
     </section>
   );
 };
