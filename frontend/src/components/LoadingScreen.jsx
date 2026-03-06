@@ -10,48 +10,51 @@ const LoadingScreen = ({ isLoading }) => {
     if (!isLoading) {
       const tl = gsap.timeline();
       tl.to(lettersRef.current, {
-        y: -40,
+        y: -30,
         opacity: 0,
-        duration: 0.6,
-        stagger: 0.04,
-        ease: 'power2.in'
+        filter: 'blur(8px)',
+        duration: 0.8,
+        stagger: 0.05,
+        ease: 'power3.inOut',
+        overwrite: true // <--- This kills the breathing animation
       })
         .to(containerRef.current, {
           yPercent: -100,
-          duration: 0.9,
-          ease: 'power4.inOut'
-        }, '-=0.2');
+          duration: 1.2,
+          ease: 'expo.inOut'
+        }, '-=0.5');
     }
   }, [isLoading]);
 
   useLayoutEffect(() => {
-    // Entry animation — slow, graceful reveal of each letter
+    // Entry animation — buttery, slow, graceful reveal of each letter
     gsap.fromTo(
       lettersRef.current,
       {
-        y: 50,
+        y: 40,
         opacity: 0,
-        filter: 'blur(6px)',
+        filter: 'blur(12px)',
       },
       {
         y: 0,
         opacity: 1,
         filter: 'blur(0px)',
-        duration: 1.2,
-        stagger: 0.07,
-        ease: 'power3.out',
-        delay: 0.3,
+        duration: 1.8,
+        stagger: 0.08,
+        ease: 'expo.out',
+        delay: 0.1,
       }
     );
 
     // Gentle breathing pulse after letters settle
     gsap.to(lettersRef.current, {
-      opacity: 0.75,
-      duration: 2,
+      opacity: 0.65,
+      filter: 'blur(1px)',
+      duration: 2.5,
       ease: 'sine.inOut',
       yoyo: true,
       repeat: -1,
-      delay: 2,
+      delay: 2.5,
       stagger: {
         each: 0.05,
         from: 'center',
