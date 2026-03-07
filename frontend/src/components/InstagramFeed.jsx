@@ -16,10 +16,61 @@ const galleryImages = [
   { id: "8", img: "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&q=80", url: "https://images.unsplash.com/photo-1631049307264-da0ec9d70304", height: 500 },
 ];
 
+// Helper: calculate the appropriate container height for the Masonry grid,
+// given the number of columns on the current viewport.
+const getMasonryHeight = () => {
+  const vw = window.innerWidth;
+
+  // These column breakpoints must match Masonry.jsx's useMedia queries exactly:
+  //   ≥1500px → 5 cols | ≥1000px → 4 | ≥600px → 3 | ≥360px → 2 | default → 1
+  let cols;
+  if (vw >= 1500) cols = 5;
+  else if (vw >= 1000) cols = 4;
+  else if (vw >= 600) cols = 3;
+  else if (vw >= 360) cols = 2;
+  else cols = 1;
+
+  // Estimate total grid height: fill each column greedily and return the tallest column.
+  const colHeights = new Array(cols).fill(0);
+
+  galleryImages.forEach(item => {
+    const col = colHeights.indexOf(Math.min(...colHeights));
+    // Masonry halves the declared height: child.height / 2
+    colHeights[col] += item.height / 2;
+  });
+
+  const tallest = Math.max(...colHeights);
+
+  // Add comfortable buffer so images always render fully inside the container
+  const buffer = cols <= 2 ? 80 : 40;
+  return tallest + buffer;
+};
+
 const InstagramFeed = () => {
   const sectionRef = useRef(null);
   const masonryContainerRef = useRef(null);
+  const isMobile = useRef(typeof window !== 'undefined' && window.innerWidth < 768);
+
+  // On MOBILE: render Masonry once when first intersecting — never unmount again.
+  // On DESKTOP: keep existing re-mount behaviour (original experience, unchanged).
   const [masonryInView, setMasonryInView] = useState(false);
+  const hasShownOnce = useRef(false);
+
+  // Dynamic container height so the grid never overflows on any screen size
+  const [containerHeight, setContainerHeight] = useState('110vh');
+
+  useEffect(() => {
+    // Pre-calculate height after first paint when we know the viewport
+    const recalc = () => {
+      const h = getMasonryHeight();
+      setContainerHeight(`${h}px`);
+      isMobile.current = window.innerWidth < 768;
+    };
+    recalc();
+    window.addEventListener('resize', recalc);
+    return () => window.removeEventListener('resize', recalc);
+  }, []);
+
   const { t } = useLang();
 
   useEffect(() => {
@@ -27,13 +78,17 @@ const InstagramFeed = () => {
       ([entry]) => {
         if (entry.isIntersecting) {
           setMasonryInView(true);
+          hasShownOnce.current = true;
         } else {
-          // Unmount the component when we scroll away so it can trigger its mount animation again when we return.
-          // To prevent rapid flashing if we just barely intersect the top, we use a small threshold
-          setMasonryInView(false);
+          // MOBILE: Once shown, keep it mounted (play-once, no re-animation on scroll back)
+          // DESKTOP: Unmount on leave so re-entry re-animates (original behaviour)
+          if (!isMobile.current) {
+            setMasonryInView(false);
+          }
+          // On mobile hasShownOnce keeps it true; setMasonryInView stays true
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.05 }
     );
     if (masonryContainerRef.current) {
       observer.observe(masonryContainerRef.current);
@@ -61,7 +116,16 @@ const InstagramFeed = () => {
     <section id="galeria" className="instagram-feed reveal-section dark-theme" ref={sectionRef} style={{ padding: '8rem 2rem', minHeight: '120vh' }}>
       <h2 className="instagram-section-title" style={{ marginBottom: '6rem', color: '#fff' }}>Galería</h2>
 
-      <div ref={masonryContainerRef} style={{ height: '110vh', position: 'relative', width: '100%', maxWidth: '1400px', margin: '0 auto 4rem auto' }}>
+      <div
+        ref={masonryContainerRef}
+        style={{
+          height: containerHeight,
+          position: 'relative',
+          width: '100%',
+          maxWidth: '1400px',
+          margin: '0 auto 4rem auto'
+        }}
+      >
         {masonryInView && (
           <Masonry
             items={galleryImages}
