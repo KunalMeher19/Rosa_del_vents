@@ -53,10 +53,7 @@ function AppInner() {
         if (href === '#') {
           lenis.scrollTo(0, { duration: 1.5 });
         } else {
-          // Add a small offset to account for the fixed header
           lenis.scrollTo(href, { offset: -80, duration: 1.5 });
-          // Optionally update the URL without jumping
-          window.history.pushState(null, '', href);
         }
       }
     };

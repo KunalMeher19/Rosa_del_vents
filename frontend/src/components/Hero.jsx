@@ -45,7 +45,7 @@ const Hero = () => {
   }, []);
 
   return (
-    <section className="hero" ref={sectionRef}>
+    <section id="hero" className="hero" ref={sectionRef}>
 
       {/* Grainient animated WebGL background */}
       <div className="hero-bg">
