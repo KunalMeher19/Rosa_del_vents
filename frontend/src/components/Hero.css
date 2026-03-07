@@ -62,6 +62,9 @@
     display: block;
     overflow: hidden;
     /* This acts as the mask */
+    padding-bottom: 0.1em;
+    /* prevents font descenders (like 'p', 'y') from clipping */
+    margin-bottom: -0.1em;
 }
 
 .hero-title .line-inner {

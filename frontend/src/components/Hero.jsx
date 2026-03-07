@@ -15,26 +15,25 @@ const Hero = () => {
       // Assuming loading screen takes ~3.5s to finish, delay hero entry
       const tl = gsap.timeline({ delay: 3.8 });
 
-      // The new "buttery" mask reveal animation
+      // The strict "buttery" mask reveal animation (pure slide up, no fade)
       tl.from('.line-inner', {
-        y: '120%', // Slide up from completely below the mask
-        opacity: 0, // Slight fade-in avoids hard mask lines
-        duration: 2, // Slower duration
-        stagger: 0.25, // Fluid stagger between lines
-        ease: 'expo.out', // Long, graceful deceleration
+        y: '100%', // Slide up perfectly from just below the mask
+        duration: 1.8,
+        stagger: 0.15,
+        ease: 'expo.out',
       })
         .from('.hero-subtitle', {
-          y: 30,
+          y: 15,
           opacity: 0,
-          duration: 2,
+          duration: 1.5,
           ease: 'power3.out',
-        }, '-=1.2') // Starts fading in while heading is still finishing its slow ease
+        }, '-=1.4') // fade in while text is still sliding into place
         .from('.hero-cta-group', {
-          y: 30,
+          y: 15,
           opacity: 0,
-          duration: 2,
+          duration: 1.5,
           ease: 'power3.out',
-        }, '-=1.3');
+        }, '-=1.4');
 
       const btn = sectionRef.current.querySelector('.hero-button');
       if (btn) {
