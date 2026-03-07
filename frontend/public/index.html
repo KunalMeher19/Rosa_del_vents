@@ -39,6 +39,28 @@
 
 <body>
   <noscript>You need to enable JavaScript to run this app.</noscript>
+
+  <!-- Static pre-React loading overlay — visible immediately on page load -->
+  <div id="html-loading-overlay" style="
+    position: fixed;
+    inset: 0;
+    background-color: #1a1a1a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+    pointer-events: none;
+  ">
+    <span style="
+      font-family: 'Cormorant Garamond', 'Georgia', serif;
+      font-size: clamp(1.4rem, 3.2vw, 2.8rem);
+      font-weight: 300;
+      letter-spacing: 0.01em;
+      color: #ffffff;
+      opacity: 0.85;
+    "></span>
+  </div>
+
   <div id="root"></div>
 </body>
 

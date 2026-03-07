@@ -1,10 +1,17 @@
-import React, { useRef, useLayoutEffect } from 'react';
+import React, { useRef, useLayoutEffect, useEffect } from 'react';
 import { gsap } from 'gsap';
 import './LoadingScreen.css';
 
 const LoadingScreen = ({ isLoading }) => {
   const containerRef = useRef(null);
   const lettersRef = useRef([]);
+
+  // Instantly remove the static HTML overlay the moment React mounts
+  useEffect(() => {
+    const overlay = document.getElementById('html-loading-overlay');
+    if (overlay) overlay.style.display = 'none';
+  }, []);
+
 
   useLayoutEffect(() => {
     if (!isLoading) {

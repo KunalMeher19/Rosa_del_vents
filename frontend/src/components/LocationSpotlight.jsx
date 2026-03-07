@@ -6,7 +6,7 @@ import './LocationSpotlight.css';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const MAPS_URL = 'https://www.booking.com/hotel/es/hostal-rosa-dels-vents.es.html';
+const MAPS_URL = 'https://www.google.com/maps/place/HOSTAL+ROSA+DELS+VENTS/@40.8730802,0.7075766,15.74z/data=!4m18!1m8!3m7!1s0x12a1197e29109ad9:0x7ea76ad0f4518a39!2sCarrer+Sant+Joan,+3,+43519+El+Perell%C3%B3,+Tarragona,+Spain!3b1!8m2!3d40.8758689!4d0.7124785!16s%2Fg%2F11cpbnsv3d!3m8!1s0x12a1197e2f667c19:0xfa1ce0a41ebf23c6!5m2!4m1!1i2!8m2!3d40.8758098!4d0.7125935!16s%2Fg%2F11c80cq9l_?hl=en&entry=ttu&g_ep=EgoyMDI2MDIyNS4wIKXMDSoASAFQAw%3D%3D';
 
 const LocationSpotlight = () => {
   const sectionRef = useRef(null);
