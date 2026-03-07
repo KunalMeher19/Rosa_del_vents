@@ -60,7 +60,13 @@
 
 .hero-title .line {
     display: block;
-    will-change: transform;
+    overflow: hidden;
+    /* This acts as the mask */
+}
+
+.hero-title .line-inner {
+    display: block;
+    will-change: transform, opacity;
 }
 
 .hero-subtitle {

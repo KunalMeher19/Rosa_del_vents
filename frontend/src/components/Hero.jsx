@@ -15,25 +15,26 @@ const Hero = () => {
       // Assuming loading screen takes ~3.5s to finish, delay hero entry
       const tl = gsap.timeline({ delay: 3.8 });
 
-      tl.from('.hero-title .line', {
-        y: 100,
-        opacity: 0,
-        duration: 1.2,
-        stagger: 0.2,
-        ease: 'power4.out',
+      // The new "buttery" mask reveal animation
+      tl.from('.line-inner', {
+        y: '120%', // Slide up from completely below the mask
+        opacity: 0, // Slight fade-in avoids hard mask lines
+        duration: 2, // Slower duration
+        stagger: 0.25, // Fluid stagger between lines
+        ease: 'expo.out', // Long, graceful deceleration
       })
         .from('.hero-subtitle', {
           y: 30,
           opacity: 0,
-          duration: 1,
+          duration: 2,
           ease: 'power3.out',
-        }, '-=0.8')
+        }, '-=1.2') // Starts fading in while heading is still finishing its slow ease
         .from('.hero-cta-group', {
           y: 30,
           opacity: 0,
-          duration: 1,
+          duration: 2,
           ease: 'power3.out',
-        }, '-=0.8');
+        }, '-=1.3');
 
       const btn = sectionRef.current.querySelector('.hero-button');
       if (btn) {
@@ -80,8 +81,9 @@ const Hero = () => {
 
       <div className="hero-content">
         <h1 className="hero-title">
-          <span className="line">{t.hero_title_1}</span>
-          <span className="line">{t.hero_title_2}</span>
+          {/* Mask containers with animating inner content */}
+          <span className="line"><span className="line-inner">{t.hero_title_1}</span></span>
+          <span className="line"><span className="line-inner">{t.hero_title_2}</span></span>
         </h1>
         <p className="hero-subtitle">{t.hero_subtitle}</p>
         <div className="hero-cta-group">
