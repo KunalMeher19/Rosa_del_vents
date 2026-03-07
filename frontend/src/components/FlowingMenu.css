@@ -39,7 +39,7 @@
 }
 
 .menu__item-link:hover {
-    color: inherit;
+    color: var(--color-text);
 }
 
 .menu__item-link:focus:not(:focus-visible) {

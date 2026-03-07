@@ -39,8 +39,8 @@ const PeopleSection = () => {
   return (
     <section id="nosotros" className="people-section reveal-section dark-theme" ref={sectionRef} style={{ backgroundColor: 'var(--color-bg-dark)', paddingBottom: '0' }}>
       <div className="section-header" style={{ marginBottom: '4rem' }}>
-        <h2 className="section-title light" style={{ color: '#fff' }}>{t.about_title}</h2>
-        <a href="#contacto" className="explore-button light magnetic-light" style={{ color: '#fff', borderColor: '#fff' }}>{t.about_explore}</a>
+        <h2 className="section-title light">{t.about_title}</h2>
+        <a href="#contacto" className="explore-button light magnetic-light">{t.about_explore}</a>
       </div>
 
       <div className="flowing-menu-container" style={{ height: '70vh', position: 'relative', width: '100vw', marginLeft: 'calc(-50vw + 50%)' }}>
