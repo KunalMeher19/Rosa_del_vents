@@ -56,4 +56,28 @@
         text-align: center;
         gap: 1.5rem;
     }
+
+    /* Allow text to wrap when layout is stacked */
+    .booking-banner-text {
+        white-space: normal;
+        font-size: 1.35rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .booking-banner {
+        padding: 1.5rem 0;
+    }
+
+    /* Text should wrap on tiny phones, no whitespace: nowrap */
+    .booking-banner-text {
+        white-space: normal;
+        font-size: 1.2rem;
+        padding: 0 0.5rem;
+    }
+
+    .booking-banner-button {
+        padding: 0.9rem 1.6rem;
+        font-size: 0.8rem;
+    }
 }

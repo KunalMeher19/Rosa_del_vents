@@ -119,6 +119,11 @@
         padding: 4rem 1.5rem;
     }
 
+    .picks-carousel-wrapper {
+        margin: 0 -1.5rem;
+        padding: 0 1.5rem;
+    }
+
     .pick-card {
         flex: 0 0 calc(50% - 0.5rem);
         min-width: 260px;
@@ -126,8 +131,23 @@
 }
 
 @media (max-width: 480px) {
+    .editors-picks {
+        padding: 3rem 1.2rem;
+    }
+
+    .picks-carousel-wrapper {
+        margin: 0 -1.2rem;
+        padding: 0 1.2rem;
+    }
+
     .pick-card {
         flex: 0 0 85vw;
         min-width: 280px;
+    }
+
+    /* Bigger tap targets for carousel controls */
+    .control-btn {
+        width: 52px;
+        height: 52px;
     }
 }

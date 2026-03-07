@@ -164,9 +164,46 @@ a.contact-info-value:hover {
     }
 }
 
+@media (max-width: 768px) {
+    .contact-section {
+        padding: 5rem 1.5rem;
+    }
+
+    .contact-heading {
+        font-size: clamp(2rem, 8vw, 3rem);
+        margin-bottom: 2.5rem;
+    }
+
+    /* Full-width submit for easy tap on mobile */
+    .contact-submit {
+        width: 100%;
+        text-align: center;
+        align-self: stretch;
+    }
+}
+
 @media (max-width: 600px) {
     .contact-info-grid {
         grid-template-columns: 1fr;
         gap: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .contact-section {
+        padding: 4rem 1.2rem;
+    }
+
+    .contact-heading {
+        font-size: clamp(1.8rem, 9vw, 2.5rem);
+    }
+
+    .contact-section-label {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        font-size: 0.95rem;
     }
 }

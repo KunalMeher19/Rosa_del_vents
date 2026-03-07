@@ -176,4 +176,36 @@
     .spotlight-title {
         font-size: clamp(2rem, 8vw, 3rem);
     }
+
+    .spotlight-content {
+        padding: 2rem 1.5rem;
+    }
+
+    .spotlight-subtitle {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .spotlight-content {
+        padding: 1.5rem 1rem;
+        max-width: 100%;
+    }
+
+    .spotlight-title {
+        font-size: clamp(1.9rem, 9vw, 2.6rem);
+    }
+
+    .spotlight-subtitle {
+        font-size: 0.85rem;
+        margin-bottom: 2rem;
+    }
+
+    /* Full-width button for easy tap */
+    .spotlight-button {
+        display: block;
+        width: 100%;
+        text-align: center;
+        padding: 0.95rem 1.5rem;
+    }
 }

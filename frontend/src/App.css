@@ -65,6 +65,8 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.5;
+  /* Allow vertical pan (page scroll) by default; horizontal drags handled per-element */
+  touch-action: pan-y;
 }
 
 a {

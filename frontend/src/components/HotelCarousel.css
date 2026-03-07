@@ -149,7 +149,51 @@
 }
 
 @media (max-width: 768px) {
+    .carousel-section-header {
+        padding: 0 1.5rem;
+        margin-bottom: 2rem;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
     .carousel-item {
         flex: 0 0 85vw;
+    }
+
+    /* Allow horizontal swipe without interfering with vertical page scroll */
+    .hotel-carousel {
+        touch-action: pan-y;
+    }
+
+    .carousel-track {
+        padding: 0 1.5rem;
+    }
+
+    .carousel-item img {
+        height: 48vh;
+    }
+}
+
+@media (max-width: 480px) {
+    .carousel-item {
+        flex: 0 0 90vw;
+    }
+
+    .carousel-item img {
+        height: 44vh;
+    }
+
+    .carousel-track {
+        padding: 0 1rem;
+        gap: 1rem;
+    }
+
+    .hotel-info {
+        padding: 1rem;
+    }
+
+    .hotel-info h3 {
+        font-size: 0.75rem;
     }
 }
